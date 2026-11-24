@@ -9,11 +9,85 @@
     "closeToRight": "Cerrar pestañas a la derecha",
     "renameLabel": "Nombre del terminal",
     "empty": "No hay terminales abiertos",
-    "emptyHint": "Pulsa {{shortcut}} para abrir un nuevo terminal"
+    "emptyHint": "Pulsa {{shortcut}} para abrir un nuevo terminal",
+    "settings": "Configuración"
   },
   "terminal": {
     "exited": "Proceso finalizado (código {{code}}). Pulsa Enter para reiniciar.",
     "exitedNoCode": "Proceso finalizado. Pulsa Enter para reiniciar.",
     "spawnError": "No se pudo iniciar el shell: {{error}}"
+  },
+  "closeConfirm": {
+    "title": "¿Cerrar terminal?",
+    "message": "Hay un programa en ejecución en \"{{name}}\". ¿Cerrar de todos modos?",
+    "messageMany": "Hay programas en ejecución en {{count}} terminales. ¿Cerrar de todos modos?",
+    "confirm": "Cerrar",
+    "cancel": "Cancelar"
+  },
+  "settings": {
+    "title": "Configuración",
+    "close": "Cerrar",
+    "nav": {
+      "general": "General",
+      "shells": "Shells"
+    },
+    "warning": "No se pudo leer el archivo de configuración, así que se usan los valores predeterminados. Al guardar un cambio, el archivo original se conservará como settings.json.bak.",
+    "saveError": "No se pudo guardar la configuración: {{error}}",
+    "dismiss": "Descartar",
+    "general": {
+      "defaultProfile": "Shell predeterminado",
+      "defaultProfileHint": "Se usa al abrir una nueva pestaña.",
+      "confirmCloseRunning": "Confirmar antes de cerrar un terminal con un programa en ejecución",
+      "confirmCloseRunningHint": "P. ej.: un servidor en marcha, una sesión SSH o un editor abierto."
+    },
+    "shells": {
+      "intro": "Perfiles disponibles para nuevas pestañas. El orden define los atajos Ctrl+Shift+1…9.",
+      "add": "Añadir perfil",
+      "redetect": "Detectar de nuevo",
+      "default": "Predeterminado",
+      "setDefault": "Establecer como predeterminado",
+      "edit": "Editar",
+      "duplicate": "Duplicar",
+      "hide": "Ocultar del menú",
+      "show": "Mostrar en el menú",
+      "delete": "Eliminar",
+      "moveUp": "Subir",
+      "moveDown": "Bajar",
+      "detected": "Detectado",
+      "custom": "Personalizado",
+      "hidden": "Oculto",
+      "notFound": "Ejecutable no encontrado",
+      "deleteTitle": "¿Eliminar perfil?",
+      "deleteMessage": "Se eliminará el perfil \"{{name}}\". Las pestañas abiertas con él siguen funcionando.",
+      "copySuffix": "(copia)",
+      "deleteDetectedNote": "Volverá si usas \"Detectar de nuevo\"."
+    },
+    "profile": {
+      "titleNew": "Nuevo perfil",
+      "titleEdit": "Editar perfil",
+      "name": "Nombre",
+      "icon": "Icono",
+      "command": "Ejecutable",
+      "browse": "Examinar…",
+      "args": "Argumentos",
+      "argsHint": "Separados por espacios. Usa comillas para valores con espacios.",
+      "cwd": "Carpeta inicial",
+      "cwdHint": "Vacío = carpeta del usuario. Acepta %VARIABLES% y ~.",
+      "env": "Variables de entorno",
+      "envHint": "Una por línea, con el formato NOMBRE=valor.",
+      "save": "Guardar",
+      "cancel": "Cancelar",
+      "nameRequired": "Indica un nombre.",
+      "commandRequired": "Indica el ejecutable.",
+      "commandNotFound": "Ejecutable no encontrado. Puedes guardarlo igualmente.",
+      "executables": "Ejecutables"
+    },
+    "icons": {
+      "powershell": "PowerShell",
+      "cmd": "Símbolo del sistema",
+      "git": "Git",
+      "linux": "Linux",
+      "terminal": "Terminal"
+    }
   }
 }

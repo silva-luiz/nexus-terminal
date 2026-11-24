@@ -1,5 +1,7 @@
 import { useSessions } from "../stores/sessions";
+import { useUi } from "../stores/ui";
 import { copySelection, pasteIntoActive } from "../lib/terminals";
+import { requestCloseTab } from "../lib/closeTabs";
 import type { ActionId } from "./defaults";
 
 /** Executa uma ação do app. Menus, atalhos e (no futuro) a paleta de comandos passam por aqui. */
@@ -21,7 +23,7 @@ export function runAction(action: ActionId): void {
       s.create();
       return;
     case "tab.close":
-      if (s.activeId) s.close(s.activeId);
+      if (s.activeId) void requestCloseTab(s.activeId);
       return;
     case "tab.rename":
       if (s.activeId) s.startRename(s.activeId);
@@ -40,5 +42,7 @@ export function runAction(action: ActionId): void {
       return copySelection();
     case "terminal.paste":
       return pasteIntoActive();
+    case "app.settings":
+      return useUi.getState().openSettings();
   }
 }

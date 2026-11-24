@@ -1,6 +1,7 @@
-use crate::shells::{self, ShellProfile};
+use crate::shells;
 
+/// Para cada comando, informa se o executável existe (usado para avisos na tela de shells).
 #[tauri::command]
-pub fn shells_list() -> Vec<ShellProfile> {
-    shells::builtin_profiles()
+pub async fn commands_exist(commands: Vec<String>) -> Vec<bool> {
+    commands.iter().map(|c| shells::command_exists(c)).collect()
 }

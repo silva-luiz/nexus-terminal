@@ -56,10 +56,11 @@ Regra: **o frontend nunca executa processos**. Ele só pede ao backend, por coma
 | `pty_write` | `{ sessionId, data: string }` | `()` | Envia teclas/texto ao shell |
 | `pty_resize` | `{ sessionId, cols, rows }` | `()` | Redimensiona o PTY |
 | `pty_kill` | `{ sessionId }` | `()` | Encerra o processo e libera recursos |
-| `pty_has_children` | `{ sessionId }` | `bool` | Usado para confirmar antes de fechar |
-| `shells_detect` | — | `ShellProfile[]` | Lista shells encontrados no sistema |
-| `settings_load` | — | `Settings` | Lê (e migra, se preciso) o arquivo |
-| `settings_save` | `Settings` | `()` | Valida e grava de forma atômica |
+| `pty_has_running_process` | `{ sessionId }` | `bool` | Há programa rodando dentro do shell (ignora os processos do próprio shell, como o inicializador do Git Bash)? Usado para confirmar antes de fechar |
+| `shells_redetect` | — | `Settings` | Detecta os shells de novo, acrescenta os novos perfis e salva |
+| `commands_exist` | `{ commands: string[] }` | `bool[]` | Verifica se cada executável existe (aviso na tela de shells) |
+| `settings_load` | — | `{ settings, warning }` | Configurações em memória; `warning` quando o arquivo estava inválido |
+| `settings_save` | `Settings` | `Settings` | Normaliza, grava de forma atômica e devolve o resultado |
 | `themes_list` | — | `Theme[]` | Temas embutidos + da pasta do usuário |
 | `theme_import` | `{ path }` | `Theme` | Importa tema JSON (inclui formato Windows Terminal) |
 | `session_save_layout` / `session_load_layout` | `Layout` / — | `()` / `Layout` | Restaurar abas ao reabrir |

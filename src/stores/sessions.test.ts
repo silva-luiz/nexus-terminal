@@ -78,17 +78,6 @@ describe("fechar", () => {
     store().close(a);
     expect(store().activeId).toBeNull();
   });
-
-  it("fechar outras e fechar à direita", () => {
-    const a = store().create();
-    const b = store().create();
-    store().create();
-    store().closeToRight(b);
-    expect(store().tabs.map((t) => t.id)).toEqual([a, b]);
-    store().closeOthers(a);
-    expect(store().tabs.map((t) => t.id)).toEqual([a]);
-    expect(store().activeId).toBe(a);
-  });
 });
 
 describe("navegar e mover", () => {
@@ -128,7 +117,10 @@ describe("reiniciar", () => {
   it("incrementa a geração e mantém nome manual", () => {
     const id = store().create();
     store().rename(id, "Build");
-    store().setStatus(id, "exited", 1);
+    store().setRunning(id, "pty-1");
+    expect(store().tabs[0]).toMatchObject({ status: "running", sessionId: "pty-1" });
+    store().setExited(id, 1);
+    expect(store().tabs[0]).toMatchObject({ status: "exited", sessionId: null, exitCode: 1 });
     store().restart(id);
     expect(store().tabs[0]).toMatchObject({
       title: "Build",

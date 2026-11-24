@@ -114,7 +114,7 @@ export function TerminalView({ tab, active }: Props) {
     const markExited = (message: string, code: number | null) => {
       exited = true;
       sessionId = null;
-      sessions().setStatus(tabId, "exited", code);
+      sessions().setExited(tabId, code);
       term.write(`\r\n${message}\r\n`);
     };
 
@@ -138,7 +138,7 @@ export function TerminalView({ tab, active }: Props) {
         }
         if (exited) return;
         sessionId = id;
-        sessions().setStatus(tabId, "running");
+        sessions().setRunning(tabId, id);
         for (const data of pending.splice(0)) write(id, data);
       })
       .catch((error: unknown) => {

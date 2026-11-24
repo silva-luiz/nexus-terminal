@@ -12,7 +12,8 @@ export type ActionId =
   | "tab.moveLeft"
   | "tab.moveRight"
   | "terminal.copy"
-  | "terminal.paste";
+  | "terminal.paste"
+  | "app.settings";
 
 export interface Keybinding {
   action: ActionId;
@@ -42,6 +43,7 @@ export const defaultKeybindings: Keybinding[] = [
   ...newWithProfile,
   { action: "terminal.copy", keys: "ctrl+shift+c" },
   { action: "terminal.paste", keys: "ctrl+shift+v" },
+  { action: "app.settings", keys: "ctrl+," },
 ];
 
 export const keybindingMap: ReadonlyMap<string, ActionId> = new Map(

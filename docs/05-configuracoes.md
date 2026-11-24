@@ -11,8 +11,8 @@ Tela de configurações aberta com `Ctrl+,`. Seções: **Geral, Shells, Aparênc
 | Windows PowerShell 5.1 | Sempre existe | `%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe` `-NoLogo` |
 | PowerShell 7+ | `pwsh.exe` no PATH ou `%ProgramFiles%\PowerShell\*\pwsh.exe` | `pwsh.exe` `-NoLogo` |
 | Prompt de Comando | `%ComSpec%` | `cmd.exe` |
-| Git Bash | Registro `HKLM\SOFTWARE\GitForWindows` → `InstallPath`; senão `%ProgramFiles%\Git\bin\bash.exe`; senão `git.exe` no PATH e subir duas pastas | `<InstallPath>\bin\bash.exe` `--login -i` |
-| WSL | `wsl.exe -l -q` (saída em UTF-16LE!) | `wsl.exe -d <distro>` |
+| Git Bash | Registro `SOFTWARE\GitForWindows` → `InstallPath` (HKLM e HKCU); senão `%ProgramFiles%\Git` ou `%LOCALAPPDATA%\Programs\Git`; senão a partir do `git.exe` no PATH | `<InstallPath>\bin\bash.exe` `--login -i` |
+| WSL | `wsl.exe -l -q` (saída em UTF-16LE!, limite de 4 s). Distros internas `docker-desktop*` e `rancher-desktop*` são ignoradas | `wsl.exe -d <distro>` |
 | Customizado | Adicionado pelo usuário | Qualquer executável + argumentos |
 
 Cuidados:
@@ -38,8 +38,11 @@ Cuidados:
 
 ### Tela
 - Lista de perfis com ícone, nome, caminho e botão "Definir como padrão".
-- Botões: **Adicionar perfil**, **Detectar novamente**, **Editar**, **Duplicar**, **Excluir** (só customizados), arrastar para ordenar.
+- Botões: **Adicionar perfil**, **Detectar novamente**, **Editar**, **Duplicar**, **Ocultar/Mostrar**, **Excluir** (com confirmação; um perfil detectado volta se o usuário usar "Detectar novamente") e **↑/↓** para ordenar (a ordem define `Ctrl+Shift+1..9`).
 - Validação: aviso se o executável não existir.
+- "Detectar novamente" só acrescenta perfis novos e atualiza executável/argumentos dos detectados; nome, pasta, variáveis e "oculto" editados pelo usuário são mantidos.
+- O perfil padrão não pode ser ocultado.
+- Na primeira execução (sem `settings.json`), os shells são detectados e o arquivo é criado. O padrão inicial é o Windows PowerShell.
 
 ## 5.2 Idioma
 

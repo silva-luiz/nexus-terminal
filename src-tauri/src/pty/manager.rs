@@ -8,7 +8,7 @@ use portable_pty::{ChildKiller, CommandBuilder, MasterPty, PtySize, native_pty_s
 use super::PtyEvent;
 use super::decoder::Utf8Decoder;
 use crate::error::AppError;
-use crate::shells::ShellProfile;
+use crate::shells::LaunchSpec;
 
 const READ_BUFFER_SIZE: usize = 16 * 1024;
 
@@ -16,6 +16,7 @@ struct Session {
     master: Box<dyn MasterPty + Send>,
     writer: Box<dyn Write + Send>,
     killer: Box<dyn ChildKiller + Send + Sync>,
+    pid: Option<u32>,
 }
 
 type SessionMap = Arc<Mutex<HashMap<String, Session>>>;
@@ -43,11 +44,10 @@ fn pty_size(cols: u16, rows: u16) -> PtySize {
 }
 
 impl PtyManager {
-    /// Inicia o shell do perfil num novo PTY e começa a enviar a saída para `on_event`.
+    /// Inicia o processo num novo PTY e começa a enviar a saída para `on_event`.
     pub fn spawn<F>(
         &self,
-        profile: &ShellProfile,
-        cwd: Option<String>,
+        spec: &LaunchSpec,
         cols: u16,
         rows: u16,
         on_event: F,
@@ -59,14 +59,14 @@ impl PtyManager {
             .openpty(pty_size(cols, rows))
             .map_err(AppError::pty)?;
 
-        let mut cmd = CommandBuilder::new(&profile.command);
-        cmd.args(&profile.args);
-        if let Some(dir) = cwd.or_else(|| std::env::var("USERPROFILE").ok()) {
+        let mut cmd = CommandBuilder::new(&spec.command);
+        cmd.args(&spec.args);
+        if let Some(dir) = &spec.cwd {
             cmd.cwd(dir);
         }
         cmd.env("TERM", "xterm-256color");
         cmd.env("COLORTERM", "truecolor");
-        for (key, value) in &profile.env {
+        for (key, value) in &spec.env {
             cmd.env(key, value);
         }
 
@@ -76,6 +76,7 @@ impl PtyManager {
         let reader = pair.master.try_clone_reader().map_err(AppError::pty)?;
         let writer = pair.master.take_writer().map_err(AppError::pty)?;
         let killer = child.clone_killer();
+        let pid = child.process_id();
 
         let id = uuid::Uuid::new_v4().to_string();
         lock(&self.sessions).insert(
@@ -84,6 +85,7 @@ impl PtyManager {
                 master: pair.master,
                 writer,
                 killer,
+                pid,
             },
         );
 
@@ -141,6 +143,14 @@ impl PtyManager {
         }
     }
 
+    /// PID do processo principal da sessão (o shell).
+    pub fn process_id(&self, id: &str) -> Result<Option<u32>, AppError> {
+        lock(&self.sessions)
+            .get(id)
+            .map(|session| session.pid)
+            .ok_or_else(|| AppError::SessionNotFound(id.to_string()))
+    }
+
     pub fn kill_all(&self) {
         for session in lock(&self.sessions).values_mut() {
             let _ = session.killer.kill();
@@ -176,12 +186,11 @@ mod tests {
 
     use super::*;
 
-    fn cmd_profile(args: &[&str]) -> ShellProfile {
-        ShellProfile {
-            id: "test".into(),
-            name: "Teste".into(),
+    fn cmd_profile(args: &[&str]) -> LaunchSpec {
+        LaunchSpec {
             command: "cmd.exe".into(),
             args: args.iter().map(|a| a.to_string()).collect(),
+            cwd: None,
             env: vec![],
         }
     }
@@ -216,15 +225,9 @@ mod tests {
         let (tx, rx) = mpsc::channel();
         let tx = Mutex::new(tx);
         let id = manager
-            .spawn(
-                &cmd_profile(&["/c", "echo nexus-ok"]),
-                None,
-                80,
-                24,
-                move |ev| {
-                    let _ = tx.lock().unwrap().send(ev);
-                },
-            )
+            .spawn(&cmd_profile(&["/c", "echo nexus-ok"]), 80, 24, move |ev| {
+                let _ = tx.lock().unwrap().send(ev);
+            })
             .expect("spawn");
 
         let (output, code) = collect_until_exit(&manager, &id, &rx);
@@ -242,11 +245,12 @@ mod tests {
         let (tx, rx) = mpsc::channel();
         let tx = Mutex::new(tx);
         let id = manager
-            .spawn(&cmd_profile(&["/q", "/k"]), None, 80, 24, move |ev| {
+            .spawn(&cmd_profile(&["/q", "/k"]), 80, 24, move |ev| {
                 let _ = tx.lock().unwrap().send(ev);
             })
             .expect("spawn");
 
+        assert!(manager.process_id(&id).expect("pid").is_some());
         manager.resize(&id, 120, 40).expect("resize");
         manager
             .write(&id, "echo digitado-ok\r\nexit\r\n")
@@ -262,7 +266,7 @@ mod tests {
         let (tx, rx) = mpsc::channel();
         let tx = Mutex::new(tx);
         let id = manager
-            .spawn(&cmd_profile(&["/q", "/k"]), None, 80, 24, move |ev| {
+            .spawn(&cmd_profile(&["/q", "/k"]), 80, 24, move |ev| {
                 let _ = tx.lock().unwrap().send(ev);
             })
             .expect("spawn");

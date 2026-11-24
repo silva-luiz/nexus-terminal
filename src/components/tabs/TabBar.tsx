@@ -4,6 +4,8 @@ import { useSessions, type TerminalTab } from "../../stores/sessions";
 import { shortcutFor, type ActionId } from "../../keybindings/defaults";
 import { ContextMenu, type MenuEntry } from "../ui/ContextMenu";
 import { Tab } from "./Tab";
+import { requestCloseOthers, requestCloseTab, requestCloseToRight } from "../../lib/closeTabs";
+import { useUi } from "../../stores/ui";
 
 interface MenuState {
   x: number;
@@ -44,17 +46,17 @@ export function TabBar() {
         {
           label: t("tabs.close"),
           hint: formatShortcut("tab.close"),
-          onSelect: () => s.close(tab.id),
+          onSelect: () => void requestCloseTab(tab.id),
         },
         {
           label: t("tabs.closeOthers"),
           disabled: s.tabs.length < 2,
-          onSelect: () => s.closeOthers(tab.id),
+          onSelect: () => void requestCloseOthers(tab.id),
         },
         {
           label: t("tabs.closeToRight"),
           disabled: index === s.tabs.length - 1,
-          onSelect: () => s.closeToRight(tab.id),
+          onSelect: () => void requestCloseToRight(tab.id),
         },
       ],
     });
@@ -105,6 +107,18 @@ export function TabBar() {
           onClick={openProfileMenu}
         >
           ▾
+        </button>
+      </div>
+      <div className="tab-bar__spacer" />
+      <div className="tab-bar__actions">
+        <button
+          type="button"
+          className="icon-button"
+          aria-label={t("tabs.settings")}
+          title={`${t("tabs.settings")} (${formatShortcut("app.settings")})`}
+          onClick={() => useUi.getState().openSettings()}
+        >
+          ⚙
         </button>
       </div>
       {menu && <ContextMenu {...menu} onClose={closeMenu} />}

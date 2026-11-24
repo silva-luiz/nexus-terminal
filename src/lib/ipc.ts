@@ -1,13 +1,9 @@
 import { Channel, invoke } from "@tauri-apps/api/core";
+import type { LoadedSettings, Settings } from "./types";
 
 /** Único ponto do frontend que conversa com o backend (ver docs/03-arquitetura.md §3.3). */
 
 export type PtyEvent = { type: "data"; data: string } | { type: "exit"; code: number | null };
-
-export interface ShellProfileInfo {
-  id: string;
-  name: string;
-}
 
 export const pty = {
   spawn(
@@ -39,10 +35,31 @@ export const pty = {
   kill(sessionId: string): Promise<void> {
     return invoke("pty_kill", { sessionId });
   },
+
+  /** Há um programa rodando dentro do shell (ex.: node, ssh, vim)? */
+  hasRunningProcess(sessionId: string): Promise<boolean> {
+    return invoke<boolean>("pty_has_running_process", { sessionId });
+  },
+};
+
+export const settingsApi = {
+  load(): Promise<LoadedSettings> {
+    return invoke<LoadedSettings>("settings_load");
+  },
+
+  /** Grava e devolve as configurações já normalizadas pelo backend. */
+  save(settings: Settings): Promise<Settings> {
+    return invoke<Settings>("settings_save", { settings });
+  },
+
+  /** Detecta os shells de novo e acrescenta os novos perfis. */
+  redetect(): Promise<Settings> {
+    return invoke<Settings>("shells_redetect");
+  },
 };
 
 export const shells = {
-  list(): Promise<ShellProfileInfo[]> {
-    return invoke<ShellProfileInfo[]>("shells_list");
+  commandsExist(commands: string[]): Promise<boolean[]> {
+    return invoke<boolean[]>("commands_exist", { commands });
   },
 };

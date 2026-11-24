@@ -2,6 +2,9 @@ import { useRef, useState, type DragEvent, type MouseEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { MAX_TITLE_LENGTH, useSessions, type TerminalTab } from "../../stores/sessions";
 import { focusActiveTerminal } from "../../lib/terminals";
+import { requestCloseTab } from "../../lib/closeTabs";
+import { useSettings } from "../../stores/settings";
+import { ProfileIcon } from "../ui/ProfileIcon";
 
 export const TAB_DRAG_TYPE = "application/x-nexus-tab";
 
@@ -15,7 +18,10 @@ interface Props {
 export function Tab({ tab, index, active, onContextMenu }: Props) {
   const { t } = useTranslation();
   const renaming = useSessions((s) => s.renamingId === tab.id);
-  const { activate, close, startRename, move } = useSessions.getState();
+  const { activate, startRename, move } = useSessions.getState();
+  const icon = useSettings(
+    (s) => s.settings?.profiles.find((p) => p.id === tab.profileId)?.icon ?? "terminal",
+  );
   const [dropTarget, setDropTarget] = useState(false);
 
   const onDragStart = (event: DragEvent) => {
@@ -56,7 +62,7 @@ export function Tab({ tab, index, active, onContextMenu }: Props) {
       onClick={() => activate(tab.id)}
       onDoubleClick={() => startRename(tab.id)}
       onAuxClick={(event) => {
-        if (event.button === 1) close(tab.id);
+        if (event.button === 1) void requestCloseTab(tab.id);
       }}
       onContextMenu={(event) => {
         event.preventDefault();
@@ -64,6 +70,7 @@ export function Tab({ tab, index, active, onContextMenu }: Props) {
         onContextMenu(event, tab);
       }}
     >
+      <ProfileIcon icon={icon} />
       {renaming ? (
         <RenameInput tab={tab} label={t("tabs.renameLabel")} />
       ) : (
@@ -76,7 +83,7 @@ export function Tab({ tab, index, active, onContextMenu }: Props) {
         title={t("tabs.close")}
         onClick={(event) => {
           event.stopPropagation();
-          close(tab.id);
+          void requestCloseTab(tab.id);
         }}
       >
         ×

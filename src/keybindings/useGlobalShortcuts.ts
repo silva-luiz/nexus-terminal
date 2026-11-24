@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { comboFromEvent } from "./matcher";
 import { blockedBrowserCombos, keybindingMap } from "./defaults";
 import { runAction } from "./actions";
+import { isModalOpen } from "../stores/ui";
 
 export function isAppShortcut(event: KeyboardEvent): boolean {
   const combo = comboFromEvent(event);
@@ -14,7 +15,8 @@ export function useGlobalShortcuts(): void {
     const onKeyDown = (event: KeyboardEvent) => {
       const combo = comboFromEvent(event);
       if (!combo) return;
-      const action = keybindingMap.get(combo);
+      // Com um diálogo aberto, as teclas ficam com o diálogo.
+      const action = isModalOpen() ? undefined : keybindingMap.get(combo);
       if (action) {
         event.preventDefault();
         event.stopPropagation();

@@ -9,11 +9,85 @@
     "closeToRight": "Fechar abas à direita",
     "renameLabel": "Nome do terminal",
     "empty": "Nenhum terminal aberto",
-    "emptyHint": "Pressione {{shortcut}} para abrir um novo terminal"
+    "emptyHint": "Pressione {{shortcut}} para abrir um novo terminal",
+    "settings": "Configurações"
   },
   "terminal": {
     "exited": "Processo encerrado (código {{code}}). Pressione Enter para reiniciar.",
     "exitedNoCode": "Processo encerrado. Pressione Enter para reiniciar.",
     "spawnError": "Não foi possível iniciar o shell: {{error}}"
+  },
+  "closeConfirm": {
+    "title": "Fechar terminal?",
+    "message": "Há um programa em execução em \"{{name}}\". Fechar mesmo assim?",
+    "messageMany": "Há programas em execução em {{count}} terminais. Fechar mesmo assim?",
+    "confirm": "Fechar",
+    "cancel": "Cancelar"
+  },
+  "settings": {
+    "title": "Configurações",
+    "close": "Fechar",
+    "nav": {
+      "general": "Geral",
+      "shells": "Shells"
+    },
+    "warning": "Não foi possível ler o arquivo de configurações, então os padrões estão em uso. Ao salvar uma alteração, o arquivo original será guardado como settings.json.bak.",
+    "saveError": "Não foi possível salvar as configurações: {{error}}",
+    "dismiss": "Dispensar",
+    "general": {
+      "defaultProfile": "Shell padrão",
+      "defaultProfileHint": "Usado ao abrir uma nova aba.",
+      "confirmCloseRunning": "Confirmar antes de fechar um terminal com programa em execução",
+      "confirmCloseRunningHint": "Ex.: um servidor rodando, uma sessão SSH ou um editor aberto."
+    },
+    "shells": {
+      "intro": "Perfis disponíveis para novas abas. A ordem define os atalhos Ctrl+Shift+1…9.",
+      "add": "Adicionar perfil",
+      "redetect": "Detectar novamente",
+      "default": "Padrão",
+      "setDefault": "Definir como padrão",
+      "edit": "Editar",
+      "duplicate": "Duplicar",
+      "hide": "Ocultar do menu",
+      "show": "Mostrar no menu",
+      "delete": "Excluir",
+      "moveUp": "Mover para cima",
+      "moveDown": "Mover para baixo",
+      "detected": "Detectado",
+      "custom": "Personalizado",
+      "hidden": "Oculto",
+      "notFound": "Executável não encontrado",
+      "deleteTitle": "Excluir perfil?",
+      "deleteMessage": "O perfil \"{{name}}\" será excluído. Abas abertas com ele continuam funcionando.",
+      "copySuffix": "(cópia)",
+      "deleteDetectedNote": "Ele volta se você usar \"Detectar novamente\"."
+    },
+    "profile": {
+      "titleNew": "Novo perfil",
+      "titleEdit": "Editar perfil",
+      "name": "Nome",
+      "icon": "Ícone",
+      "command": "Executável",
+      "browse": "Procurar…",
+      "args": "Argumentos",
+      "argsHint": "Separados por espaço. Use aspas para valores com espaço.",
+      "cwd": "Pasta inicial",
+      "cwdHint": "Vazio = pasta do usuário. Aceita %VARIÁVEIS% e ~.",
+      "env": "Variáveis de ambiente",
+      "envHint": "Uma por linha, no formato NOME=valor.",
+      "save": "Salvar",
+      "cancel": "Cancelar",
+      "nameRequired": "Informe um nome.",
+      "commandRequired": "Informe o executável.",
+      "commandNotFound": "Executável não encontrado. Você pode salvar mesmo assim.",
+      "executables": "Executáveis"
+    },
+    "icons": {
+      "powershell": "PowerShell",
+      "cmd": "Prompt de Comando",
+      "git": "Git",
+      "linux": "Linux",
+      "terminal": "Terminal"
+    }
   }
 }

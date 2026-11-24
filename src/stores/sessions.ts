@@ -1,5 +1,10 @@
 import { create } from "zustand";
-import type { ShellProfileInfo } from "../lib/ipc";
+
+/** Perfil visível no menu de nova aba (vem das configurações). */
+export interface ShellProfileInfo {
+  id: string;
+  name: string;
+}
 
 export type TabStatus = "starting" | "running" | "exited";
 
@@ -14,6 +19,8 @@ export interface TerminalTab {
   titleLocked: boolean;
   status: TabStatus;
   exitCode: number | null;
+  /** ID da sessão no backend enquanto o processo está rodando. */
+  sessionId: string | null;
   /** Incrementa a cada reinício para recriar o terminal. */
   generation: number;
 }
@@ -29,12 +36,10 @@ interface SessionsState {
   renamingId: string | null;
   counters: Record<string, number>;
 
-  setProfiles(profiles: ShellProfileInfo[]): void;
+  setProfiles(profiles: ShellProfileInfo[], defaultProfileId: string): void;
   ensureOne(): void;
   create(profileId?: string): string;
   close(id: string): void;
-  closeOthers(id: string): void;
-  closeToRight(id: string): void;
   activate(id: string): void;
   activateIndex(index: number): void;
   activateLast(): void;
@@ -44,7 +49,8 @@ interface SessionsState {
   startRename(id: string | null): void;
   rename(id: string, title: string): void;
   setShellTitle(id: string, title: string): void;
-  setStatus(id: string, status: TabStatus, exitCode?: number | null): void;
+  setRunning(id: string, sessionId: string): void;
+  setExited(id: string, exitCode: number | null): void;
   restart(id: string): void;
 }
 
@@ -70,8 +76,8 @@ export const useSessions = create<SessionsState>((set, get) => ({
   renamingId: null,
   counters: {},
 
-  setProfiles(profiles) {
-    set({ profiles });
+  setProfiles(profiles, defaultProfileId) {
+    set({ profiles, defaultProfileId });
   },
 
   ensureOne() {
@@ -92,6 +98,7 @@ export const useSessions = create<SessionsState>((set, get) => ({
       titleLocked: false,
       status: "starting",
       exitCode: null,
+      sessionId: null,
       generation: 0,
     };
     set({
@@ -117,21 +124,6 @@ export const useSessions = create<SessionsState>((set, get) => ({
       activeId: nextActive,
       renamingId: renamingId === id ? null : renamingId,
     });
-  },
-
-  closeOthers(id) {
-    const tab = get().tabs.find((t) => t.id === id);
-    if (!tab) return;
-    set({ tabs: [tab], activeId: id, renamingId: null });
-  },
-
-  closeToRight(id) {
-    const { tabs, activeId } = get();
-    const index = tabs.findIndex((t) => t.id === id);
-    if (index === -1) return;
-    const remaining = tabs.slice(0, index + 1);
-    const activeStillOpen = remaining.some((t) => t.id === activeId);
-    set({ tabs: remaining, activeId: activeStillOpen ? activeId : id, renamingId: null });
   },
 
   activate(id) {
@@ -197,8 +189,16 @@ export const useSessions = create<SessionsState>((set, get) => ({
     }));
   },
 
-  setStatus(id, status, exitCode = null) {
-    set((state) => ({ tabs: updateTab(state.tabs, id, () => ({ status, exitCode })) }));
+  setRunning(id, sessionId) {
+    set((state) => ({
+      tabs: updateTab(state.tabs, id, () => ({ status: "running", sessionId, exitCode: null })),
+    }));
+  },
+
+  setExited(id, exitCode) {
+    set((state) => ({
+      tabs: updateTab(state.tabs, id, () => ({ status: "exited", sessionId: null, exitCode })),
+    }));
   },
 
   restart(id) {
@@ -206,6 +206,7 @@ export const useSessions = create<SessionsState>((set, get) => ({
       tabs: updateTab(state.tabs, id, (tab) => ({
         status: "starting",
         exitCode: null,
+        sessionId: null,
         generation: tab.generation + 1,
         title: tab.titleLocked ? tab.title : tab.defaultTitle,
       })),

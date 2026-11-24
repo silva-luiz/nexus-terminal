@@ -13,4 +13,8 @@
   --font-ui: "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif;
   --tab-bar-height: 38px;
   --radius: 6px;
+
+  --color-danger: #e5534b;
+  --color-warning: #d29922;
+  --color-overlay: rgb(0 0 0 / 0.55);
 }

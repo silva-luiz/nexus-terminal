@@ -9,11 +9,85 @@
     "closeToRight": "Close tabs to the right",
     "renameLabel": "Terminal name",
     "empty": "No terminals open",
-    "emptyHint": "Press {{shortcut}} to open a new terminal"
+    "emptyHint": "Press {{shortcut}} to open a new terminal",
+    "settings": "Settings"
   },
   "terminal": {
     "exited": "Process exited (code {{code}}). Press Enter to restart.",
     "exitedNoCode": "Process exited. Press Enter to restart.",
     "spawnError": "Could not start the shell: {{error}}"
+  },
+  "closeConfirm": {
+    "title": "Close terminal?",
+    "message": "A program is still running in \"{{name}}\". Close anyway?",
+    "messageMany": "Programs are still running in {{count}} terminals. Close anyway?",
+    "confirm": "Close",
+    "cancel": "Cancel"
+  },
+  "settings": {
+    "title": "Settings",
+    "close": "Close",
+    "nav": {
+      "general": "General",
+      "shells": "Shells"
+    },
+    "warning": "The settings file could not be read, so the defaults are in use. When you save a change, the original file will be kept as settings.json.bak.",
+    "saveError": "Could not save settings: {{error}}",
+    "dismiss": "Dismiss",
+    "general": {
+      "defaultProfile": "Default shell",
+      "defaultProfileHint": "Used when opening a new tab.",
+      "confirmCloseRunning": "Confirm before closing a terminal with a running program",
+      "confirmCloseRunningHint": "E.g. a running server, an SSH session or an open editor."
+    },
+    "shells": {
+      "intro": "Profiles available for new tabs. The order defines the Ctrl+Shift+1…9 shortcuts.",
+      "add": "Add profile",
+      "redetect": "Detect again",
+      "default": "Default",
+      "setDefault": "Set as default",
+      "edit": "Edit",
+      "duplicate": "Duplicate",
+      "hide": "Hide from menu",
+      "show": "Show in menu",
+      "delete": "Delete",
+      "moveUp": "Move up",
+      "moveDown": "Move down",
+      "detected": "Detected",
+      "custom": "Custom",
+      "hidden": "Hidden",
+      "notFound": "Executable not found",
+      "deleteTitle": "Delete profile?",
+      "deleteMessage": "The profile \"{{name}}\" will be deleted. Tabs already open with it keep working.",
+      "copySuffix": "(copy)",
+      "deleteDetectedNote": "It comes back if you use \"Detect again\"."
+    },
+    "profile": {
+      "titleNew": "New profile",
+      "titleEdit": "Edit profile",
+      "name": "Name",
+      "icon": "Icon",
+      "command": "Executable",
+      "browse": "Browse…",
+      "args": "Arguments",
+      "argsHint": "Separated by spaces. Use quotes for values with spaces.",
+      "cwd": "Starting folder",
+      "cwdHint": "Empty = user folder. Accepts %VARIABLES% and ~.",
+      "env": "Environment variables",
+      "envHint": "One per line, as NAME=value.",
+      "save": "Save",
+      "cancel": "Cancel",
+      "nameRequired": "Enter a name.",
+      "commandRequired": "Enter the executable.",
+      "commandNotFound": "Executable not found. You can save anyway.",
+      "executables": "Executables"
+    },
+    "icons": {
+      "powershell": "PowerShell",
+      "cmd": "Command Prompt",
+      "git": "Git",
+      "linux": "Linux",
+      "terminal": "Terminal"
+    }
   }
 }

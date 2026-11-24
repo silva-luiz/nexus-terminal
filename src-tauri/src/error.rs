@@ -9,8 +9,14 @@ pub enum AppError {
     #[error("perfil de shell não encontrado: {0}")]
     ProfileNotFound(String),
 
+    #[error("executável não encontrado: {0}")]
+    CommandNotFound(String),
+
     #[error("falha no terminal: {0}")]
     Pty(String),
+
+    #[error("configuração inválida: {0}")]
+    Config(String),
 
     #[error(transparent)]
     Io(#[from] std::io::Error),
@@ -19,6 +25,10 @@ pub enum AppError {
 impl AppError {
     pub fn pty(err: impl std::fmt::Display) -> Self {
         AppError::Pty(err.to_string())
+    }
+
+    pub fn config(err: impl std::fmt::Display) -> Self {
+        AppError::Config(err.to_string())
     }
 }
 
