@@ -29,7 +29,10 @@
     "close": "Fechar",
     "nav": {
       "general": "Geral",
-      "shells": "Shells"
+      "shells": "Shells",
+      "appearance": "Aparência",
+      "language": "Idioma",
+      "keybindings": "Atalhos"
     },
     "warning": "Não foi possível ler o arquivo de configurações, então os padrões estão em uso. Ao salvar uma alteração, o arquivo original será guardado como settings.json.bak.",
     "saveError": "Não foi possível salvar as configurações: {{error}}",
@@ -88,6 +91,82 @@
       "git": "Git",
       "linux": "Linux",
       "terminal": "Terminal"
+    },
+    "appearance": {
+      "mode": "Modo",
+      "mode_system": "Seguir o Windows",
+      "mode_dark": "Sempre escuro",
+      "mode_light": "Sempre claro",
+      "darkTheme": "Tema escuro",
+      "lightTheme": "Tema claro",
+      "inUse": "Em uso",
+      "custom": "Importado",
+      "import": "Importar tema…",
+      "importHint": "Arquivo JSON do Nexus Terminal ou esquema de cores do Windows Terminal (um ou vários em \"schemes\").",
+      "themeFiles": "Temas",
+      "imported_one": "Tema importado: {{names}}",
+      "imported_other": "{{count}} temas importados: {{names}}",
+      "importInvalid": "o arquivo não contém um tema válido.",
+      "importError": "Não foi possível importar: {{error}}",
+      "deleteTheme": "Excluir tema",
+      "deleteThemeTitle": "Excluir tema?",
+      "deleteThemeMessage": "O tema \"{{name}}\" será excluído.",
+      "terminal": "Terminal",
+      "font": "Fonte",
+      "fontHint": "Nome de uma fonte monoespaçada instalada. Se não existir, o app usa Cascadia Mono ou Consolas.",
+      "fontSize": "Tamanho",
+      "lineHeight": "Altura da linha",
+      "cursor": "Cursor",
+      "cursor_bar": "Barra",
+      "cursor_block": "Bloco",
+      "cursor_underline": "Sublinhado",
+      "cursorBlink": "Cursor piscando"
+    },
+    "language": {
+      "label": "Idioma da interface",
+      "system": "Seguir o Windows ({{language}})",
+      "note": "Os nomes dos perfis de shell não são traduzidos; renomeie-os em Shells, se quiser."
+    },
+    "keybindings": {
+      "intro": "Clique em um atalho para alterá-lo e pressione a nova combinação.",
+      "search": "Buscar ação ou atalho",
+      "action": "Ação",
+      "shortcut": "Atalho",
+      "options": "Opções",
+      "none": "Sem atalho",
+      "record": "Clique para alterar",
+      "recording": "Pressione as teclas… (Esc cancela)",
+      "remove": "Remover",
+      "reset": "Restaurar padrão",
+      "resetAll": "Restaurar todos os padrões",
+      "resetAllTitle": "Restaurar atalhos?",
+      "resetAllMessage": "Todos os atalhos voltarão ao padrão.",
+      "needsModifier": "Use Ctrl, Alt ou Win junto com a tecla (ou uma tecla F), para não atrapalhar a digitação no terminal.",
+      "conflictTitle": "Atalho em uso",
+      "conflictMessage": "{{combo}} já é usado por \"{{action}}\". Usar nesta ação e remover de lá?",
+      "replace": "Substituir",
+      "noResults": "Nenhuma ação encontrada."
+    }
+  },
+  "actions": {
+    "tab": {
+      "new": "Nova aba",
+      "newWithProfile": "Nova aba com o perfil {{n}}",
+      "close": "Fechar aba",
+      "rename": "Renomear aba",
+      "next": "Próxima aba",
+      "prev": "Aba anterior",
+      "goTo": "Ir para a aba {{n}}",
+      "goToLast": "Ir para a última aba",
+      "moveLeft": "Mover aba para a esquerda",
+      "moveRight": "Mover aba para a direita"
+    },
+    "terminal": {
+      "copy": "Copiar",
+      "paste": "Colar"
+    },
+    "app": {
+      "settings": "Abrir configurações"
     }
   }
 }

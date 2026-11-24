@@ -11,13 +11,13 @@ import i18n from "../../i18n";
 import { pty } from "../../lib/ipc";
 import {
   copySelection,
+  getTerminalVisualOptions,
   pasteIntoActive,
   registerTerminal,
   unregisterTerminal,
 } from "../../lib/terminals";
 import { isAppShortcut } from "../../keybindings/useGlobalShortcuts";
 import { useSessions, type TerminalTab } from "../../stores/sessions";
-import { nexusDarkTerminal } from "../../themes/nexusDark";
 
 interface Props {
   tab: TerminalTab;
@@ -38,14 +38,9 @@ export function TerminalView({ tab, active }: Props) {
     const sessions = useSessions.getState;
 
     const term = new Terminal({
-      fontFamily: '"Cascadia Code", "Cascadia Mono", Consolas, monospace',
-      fontSize: 14,
-      lineHeight: 1.2,
-      cursorBlink: true,
-      cursorStyle: "bar",
+      ...getTerminalVisualOptions(),
       scrollback: 10_000,
       allowProposedApi: true,
-      theme: nexusDarkTerminal,
     });
     const fit = new FitAddon();
     term.loadAddon(fit);
@@ -68,7 +63,7 @@ export function TerminalView({ tab, active }: Props) {
     fit.fit();
     termRef.current = term;
     fitRef.current = fit;
-    registerTerminal(tabId, term);
+    registerTerminal(tabId, term, fit);
 
     let sessionId: string | null = null;
     let disposed = false;

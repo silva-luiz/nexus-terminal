@@ -12,7 +12,18 @@ export const resources = {
 
 export type Language = keyof typeof resources;
 
-/** Na Fase 4 o idioma passa a vir do settings.json. */
+/** Idiomas oferecidos nas configurações, com o nome no próprio idioma. */
+export const LANGUAGES: { code: Language; label: string }[] = [
+  { code: "pt-BR", label: "Português (Brasil)" },
+  { code: "en-US", label: "English (US)" },
+  { code: "es-ES", label: "Español" },
+];
+
+/** "system" segue o idioma do Windows; senão usa o escolhido. */
+export function resolveLanguage(setting: Language | "system"): Language {
+  return setting === "system" ? detectLanguage() : setting;
+}
+
 export function detectLanguage(browserLanguage: string = navigator.language): Language {
   const lang = browserLanguage.toLowerCase();
   if (lang.startsWith("pt")) return "pt-BR";

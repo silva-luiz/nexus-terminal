@@ -1,7 +1,7 @@
 import { useCallback, useState, type MouseEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { useSessions, type TerminalTab } from "../../stores/sessions";
-import { shortcutFor, type ActionId } from "../../keybindings/defaults";
+import { shortcutLabel, useShortcutLabel } from "../../keybindings/bindings";
 import { ContextMenu, type MenuEntry } from "../ui/ContextMenu";
 import { Tab } from "./Tab";
 import { requestCloseOthers, requestCloseTab, requestCloseToRight } from "../../lib/closeTabs";
@@ -13,12 +13,9 @@ interface MenuState {
   items: MenuEntry[];
 }
 
-/** "ctrl+shift+t" → "Ctrl+Shift+T" */
-export function formatShortcut(action: ActionId): string | undefined {
-  return shortcutFor(action)
-    ?.split("+")
-    .map((part) => (part.length === 1 ? part.toUpperCase() : part[0].toUpperCase() + part.slice(1)))
-    .join("+");
+/** "Nova aba (Ctrl+Shift+T)", ou só o texto quando a ação está sem atalho. */
+export function withShortcut(label: string, shortcut: string | undefined): string {
+  return shortcut ? `${label} (${shortcut})` : label;
 }
 
 export function TabBar() {
@@ -27,6 +24,8 @@ export function TabBar() {
   const activeId = useSessions((s) => s.activeId);
   const profiles = useSessions((s) => s.profiles);
   const [menu, setMenu] = useState<MenuState | null>(null);
+  const newTabShortcut = useShortcutLabel("tab.new");
+  const settingsShortcut = useShortcutLabel("app.settings");
   const closeMenu = useCallback(() => setMenu(null), []);
 
   const openTabMenu = (event: MouseEvent, tab: TerminalTab) => {
@@ -38,14 +37,14 @@ export function TabBar() {
       items: [
         {
           label: t("tabs.rename"),
-          hint: formatShortcut("tab.rename"),
+          hint: shortcutLabel("tab.rename"),
           onSelect: () => s.startRename(tab.id),
         },
         { label: t("tabs.restart"), onSelect: () => s.restart(tab.id) },
         "separator",
         {
           label: t("tabs.close"),
-          hint: formatShortcut("tab.close"),
+          hint: shortcutLabel("tab.close"),
           onSelect: () => void requestCloseTab(tab.id),
         },
         {
@@ -69,7 +68,7 @@ export function TabBar() {
       y: rect.bottom + 2,
       items: profiles.map((profile, i) => ({
         label: profile.name,
-        hint: formatShortcut(`tab.newWithProfile.${i + 1}`),
+        hint: shortcutLabel(`tab.newWithProfile.${i + 1}`),
         onSelect: () => useSessions.getState().create(profile.id),
       })),
     });
@@ -93,7 +92,7 @@ export function TabBar() {
           type="button"
           className="icon-button"
           aria-label={t("tabs.new")}
-          title={`${t("tabs.new")} (${formatShortcut("tab.new")})`}
+          title={withShortcut(t("tabs.new"), newTabShortcut)}
           onClick={() => useSessions.getState().create()}
         >
           +
@@ -115,7 +114,7 @@ export function TabBar() {
           type="button"
           className="icon-button"
           aria-label={t("tabs.settings")}
-          title={`${t("tabs.settings")} (${formatShortcut("app.settings")})`}
+          title={withShortcut(t("tabs.settings"), settingsShortcut)}
           onClick={() => useUi.getState().openSettings()}
         >
           ⚙

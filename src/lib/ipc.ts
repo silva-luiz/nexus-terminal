@@ -63,3 +63,22 @@ export const shells = {
     return invoke<boolean[]>("commands_exist", { commands });
   },
 };
+
+export const themesApi = {
+  /** Temas do usuário como estão no disco (a validação é feita em themes/theme.ts). */
+  list(): Promise<unknown[]> {
+    return invoke<unknown[]>("themes_list");
+  },
+
+  readFile(path: string): Promise<unknown> {
+    return invoke<unknown>("themes_read_file", { path });
+  },
+
+  save(theme: object): Promise<void> {
+    return invoke("themes_save", { theme });
+  },
+
+  delete(id: string): Promise<void> {
+    return invoke("themes_delete", { id });
+  },
+};

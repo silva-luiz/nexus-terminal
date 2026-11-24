@@ -6,9 +6,12 @@ import { focusActiveTerminal } from "../../lib/terminals";
 import { Modal } from "../ui/Modal";
 import { GeneralSection } from "./GeneralSection";
 import { ShellsSection } from "./ShellsSection";
+import { AppearanceSection } from "./AppearanceSection";
+import { LanguageSection } from "./LanguageSection";
+import { KeybindingsSection } from "./KeybindingsSection";
 
-type Section = "general" | "shells";
-const SECTIONS: Section[] = ["general", "shells"];
+type Section = "general" | "appearance" | "language" | "shells" | "keybindings";
+const SECTIONS: Section[] = ["general", "appearance", "language", "shells", "keybindings"];
 
 export function SettingsDialog() {
   const { t } = useTranslation();
@@ -75,7 +78,10 @@ export function SettingsDialog() {
         )}
 
         {settings && section === "general" && <GeneralSection settings={settings} />}
+        {settings && section === "appearance" && <AppearanceSection settings={settings} />}
+        {settings && section === "language" && <LanguageSection settings={settings} />}
         {settings && section === "shells" && <ShellsSection settings={settings} />}
+        {settings && section === "keybindings" && <KeybindingsSection settings={settings} />}
       </section>
     </Modal>
   );

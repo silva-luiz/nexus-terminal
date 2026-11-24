@@ -32,14 +32,14 @@ const settings = (): Settings => ({
   version: 1,
   general: { defaultProfile: "a", confirmCloseRunning: true, futureKey: 1 },
   profiles: [profile("a"), profile("b"), profile("c", { hidden: true })],
-  theme: { dark: "x" },
+  futureSection: { dark: "x" },
 });
 
 describe("edição de perfis", () => {
   it("preserva chaves desconhecidas ao alterar", () => {
     const next = setDefaultProfile(settings(), "b");
     expect(next.general).toEqual({ defaultProfile: "b", confirmCloseRunning: true, futureKey: 1 });
-    expect(next.theme).toEqual({ dark: "x" });
+    expect(next.futureSection).toEqual({ dark: "x" });
   });
 
   it("insere ou atualiza", () => {

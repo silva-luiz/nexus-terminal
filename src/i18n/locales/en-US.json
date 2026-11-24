@@ -29,7 +29,10 @@
     "close": "Close",
     "nav": {
       "general": "General",
-      "shells": "Shells"
+      "shells": "Shells",
+      "appearance": "Appearance",
+      "language": "Language",
+      "keybindings": "Shortcuts"
     },
     "warning": "The settings file could not be read, so the defaults are in use. When you save a change, the original file will be kept as settings.json.bak.",
     "saveError": "Could not save settings: {{error}}",
@@ -88,6 +91,82 @@
       "git": "Git",
       "linux": "Linux",
       "terminal": "Terminal"
+    },
+    "appearance": {
+      "mode": "Mode",
+      "mode_system": "Follow Windows",
+      "mode_dark": "Always dark",
+      "mode_light": "Always light",
+      "darkTheme": "Dark theme",
+      "lightTheme": "Light theme",
+      "inUse": "In use",
+      "custom": "Imported",
+      "import": "Import theme…",
+      "importHint": "Nexus Terminal JSON file or Windows Terminal color scheme (one, or several under \"schemes\").",
+      "themeFiles": "Themes",
+      "imported_one": "Theme imported: {{names}}",
+      "imported_other": "{{count}} themes imported: {{names}}",
+      "importInvalid": "the file does not contain a valid theme.",
+      "importError": "Could not import: {{error}}",
+      "deleteTheme": "Delete theme",
+      "deleteThemeTitle": "Delete theme?",
+      "deleteThemeMessage": "The theme \"{{name}}\" will be deleted.",
+      "terminal": "Terminal",
+      "font": "Font",
+      "fontHint": "Name of an installed monospace font. If it is missing, the app uses Cascadia Mono or Consolas.",
+      "fontSize": "Size",
+      "lineHeight": "Line height",
+      "cursor": "Cursor",
+      "cursor_bar": "Bar",
+      "cursor_block": "Block",
+      "cursor_underline": "Underline",
+      "cursorBlink": "Blinking cursor"
+    },
+    "language": {
+      "label": "Interface language",
+      "system": "Follow Windows ({{language}})",
+      "note": "Shell profile names are not translated; rename them under Shells if you like."
+    },
+    "keybindings": {
+      "intro": "Click a shortcut to change it, then press the new key combination.",
+      "search": "Search action or shortcut",
+      "action": "Action",
+      "shortcut": "Shortcut",
+      "options": "Options",
+      "none": "No shortcut",
+      "record": "Click to change",
+      "recording": "Press the keys… (Esc cancels)",
+      "remove": "Remove",
+      "reset": "Restore default",
+      "resetAll": "Restore all defaults",
+      "resetAllTitle": "Restore shortcuts?",
+      "resetAllMessage": "All shortcuts will go back to their defaults.",
+      "needsModifier": "Use Ctrl, Alt or Win with the key (or an F key), so typing in the terminal is not affected.",
+      "conflictTitle": "Shortcut in use",
+      "conflictMessage": "{{combo}} is already used by \"{{action}}\". Use it here and remove it there?",
+      "replace": "Replace",
+      "noResults": "No actions found."
+    }
+  },
+  "actions": {
+    "tab": {
+      "new": "New tab",
+      "newWithProfile": "New tab with profile {{n}}",
+      "close": "Close tab",
+      "rename": "Rename tab",
+      "next": "Next tab",
+      "prev": "Previous tab",
+      "goTo": "Go to tab {{n}}",
+      "goToLast": "Go to last tab",
+      "moveLeft": "Move tab left",
+      "moveRight": "Move tab right"
+    },
+    "terminal": {
+      "copy": "Copy",
+      "paste": "Paste"
+    },
+    "app": {
+      "settings": "Open settings"
     }
   }
 }

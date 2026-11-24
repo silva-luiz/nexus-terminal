@@ -45,5 +45,5 @@ pnpm build        # gera os instaladores em src-tauri\target\release\bundle
 | 1 — Um terminal funcionando | ✅ ConPTY, xterm.js (WebGL), redimensionar, links, Unicode |
 | 2 — Várias abas + renomear | ✅ Abas, renomear (duplo clique/F2/menu), título automático, reordenar arrastando, menu de contexto, atalhos, reiniciar com Enter |
 | 3 — Configurações: shells e geral | ✅ Detecção (PowerShell 5.1/7, CMD, Git Bash, WSL), `settings.json`, tela de configurações (`Ctrl+,`), editor de perfis, confirmação ao fechar com programa rodando |
-| 4 — Temas, idioma e atalhos configuráveis | ⏳ Próxima (i18n já preparado: pt-BR, en-US, es-ES) |
-| 5 — Polimento e v1.0 | ⏳ |
+| 4 — Temas, idioma e atalhos configuráveis | ✅ 8 temas embutidos + importação (inclusive do Windows Terminal), modo claro/escuro seguindo o Windows, fonte e cursor, idioma (pt-BR, en-US, es-ES) e atalhos personalizáveis com detecção de conflito |
+| 5 — Polimento e v1.0 | ⏳ Próxima |

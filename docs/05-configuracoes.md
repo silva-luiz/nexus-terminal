@@ -106,15 +106,27 @@ Um tema define as cores da **interface** e as do **terminal** (16 cores ANSI + f
 Aplicação:
 - `ui.*` vira variáveis CSS em `:root` (`--color-background`, ...).
 - `terminal.*` vai direto para `term.options.theme` de cada xterm aberto.
-- Opção **"Seguir o sistema"**: escolhe um tema claro e um escuro e troca conforme o Windows (`prefers-color-scheme`).
+- A barra de título do Windows acompanha o tipo do tema (`setTheme("dark" | "light")`).
+- `ui` é opcional no arquivo: cores ausentes são derivadas de `terminal` (fundo, texto e azul), em `themes/theme.ts → deriveUi`.
 
-Temas embutidos sugeridos: Nexus Dark, Nexus Light e temas populares de licença aberta (ex.: Dracula, Solarized Dark/Light, One Dark, Nord). Confira a licença de cada um antes de incluir e cite a origem.
+Modo (`settings.theme`):
 
-Importação:
-- Arquivo `.json` no formato acima, **ou** um esquema de cores do Windows Terminal (`name`, `background`, `foreground`, `black`...`brightWhite`, `cursorColor`, `selectionBackground`). Nesse caso, as cores da interface são derivadas do fundo e do texto.
-- Validação com zod; cores inválidas mostram erro em vez de quebrar.
+```jsonc
+"theme": { "mode": "system", "dark": "dracula", "light": "nexus-light" }
+// mode: "system" (segue o Windows) | "dark" (sempre o tema escuro) | "light" (sempre o claro)
+```
 
-Aparência também inclui: família da fonte (padrão `Cascadia Code, Consolas, monospace`), tamanho, altura de linha, ligaduras, estilo do cursor (bloco, barra, sublinhado), cursor piscando e opacidade da janela.
+Se o tema escolhido não existir mais (ex.: tema importado excluído), o app usa Nexus Dark ou Nexus Light.
+
+Temas embutidos: Nexus Dark, Nexus Light, Dracula, One Half Dark, One Half Light, Solarized Dark, Solarized Light e Nord (paletas de terceiros sob licença MIT, créditos em `THIRD_PARTY_NOTICES.md`).
+
+Importação ("Importar tema…" em Aparência):
+- Arquivo `.json` no formato acima, **ou** um esquema de cores do Windows Terminal (`name`, `background`, `foreground`, `black`...`brightWhite`, `purple`/`brightPurple`, `cursorColor`, `selectionBackground`), **ou** um `settings.json` do Windows Terminal inteiro (importa todos os itens de `schemes`).
+- O tipo (claro/escuro) é deduzido pela luminância do fundo quando não vem no arquivo.
+- Validação com zod; arquivo sem tema válido mostra erro. Limite de 1 MB.
+- O tema é salvo em `%APPDATA%\NexusTerminal\themes\<id>.json`. O `id` só aceita `a-z`, `0-9` e `-` (o backend recusa qualquer outro, para não gravar fora da pasta). Um tema importado com o mesmo `id` de um embutido ganha o sufixo `-custom`.
+
+Aparência do terminal (`settings.appearance`): família da fonte (padrão `Cascadia Code`, com Cascadia Mono e Consolas como reserva), tamanho (8–32), altura de linha (1.0–2.0), estilo do cursor (barra, bloco, sublinhado) e cursor piscando. Mudanças valem na hora para todos os terminais abertos. Opacidade/Mica da janela ficou para a v1.x (C-09).
 
 ## 5.4 Atalhos de teclado
 
@@ -152,7 +164,14 @@ Aparência também inclui: família da fonte (padrão `Cascadia Code, Consolas, 
 ]
 ```
 
-Só as diferenças em relação ao padrão são gravadas; o resto vem de `keybindings/defaults.ts`.
+Só as diferenças em relação ao padrão são gravadas; o resto vem de `keybindings/defaults.ts`. Cada ação tem um atalho (ou nenhum). As ações que já existem no app são as de `tab.*`, `terminal.copy`, `terminal.paste` e `app.settings`; as outras da tabela entram nas fases seguintes.
+
+Tela de atalhos:
+- Clicar no atalho entra no modo de gravação; `Esc` sozinho cancela.
+- Atalhos precisam de `Ctrl`, `Alt` ou `Win` (ou ser uma tecla F), para não roubar teclas normais de digitação.
+- Conflito: "Ctrl+X já é usado por *ação*. Usar nesta ação e remover de lá?" — se confirmar, a outra ação fica sem atalho.
+- "Restaurar padrão" por ação e "Restaurar todos os padrões".
+- Com qualquer diálogo aberto, os atalhos do app ficam desligados (as teclas vão para o diálogo).
 
 ### Regras de implementação
 - Normalizar a combinação a partir de `KeyboardEvent.code` (tecla física) e modificadores, numa ordem fixa: `ctrl+alt+shift+meta+<tecla>`. Isso faz os atalhos funcionarem em teclados ABNT2 e US.
@@ -184,7 +203,7 @@ Só as diferenças em relação ao padrão são gravadas; o resto vem de `keybin
   "version": 1,
   "language": "pt-BR",
   "theme": { "mode": "system", "dark": "nexus-dark", "light": "nexus-light" },
-  "appearance": { "fontFamily": "Cascadia Code", "fontSize": 14, "lineHeight": 1.2, "cursorStyle": "bar", "cursorBlink": true, "opacity": 1.0 },
+  "appearance": { "fontFamily": "Cascadia Code", "fontSize": 14, "lineHeight": 1.2, "cursorStyle": "bar", "cursorBlink": true },
   "general": { "defaultProfile": "git-bash", "restoreSession": true },
   "profiles": [ /* ... */ ],
   "keybindings": [ /* só as diferenças */ ]

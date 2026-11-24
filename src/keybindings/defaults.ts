@@ -1,4 +1,4 @@
-/** Atalhos padrão (docs/05-configuracoes.md §5.4). Na Fase 4 o usuário poderá alterá-los. */
+/** Atalhos padrão (docs/05-configuracoes.md §5.4). As personalizações ficam em bindings.ts. */
 
 export type ActionId =
   | "tab.new"
@@ -45,14 +45,6 @@ export const defaultKeybindings: Keybinding[] = [
   { action: "terminal.paste", keys: "ctrl+shift+v" },
   { action: "app.settings", keys: "ctrl+," },
 ];
-
-export const keybindingMap: ReadonlyMap<string, ActionId> = new Map(
-  defaultKeybindings.map((b) => [b.keys, b.action]),
-);
-
-export function shortcutFor(action: ActionId): string | undefined {
-  return defaultKeybindings.find((b) => b.action === action)?.keys;
-}
 
 /** Atalhos do navegador que recarregariam a interface e apagariam os terminais. */
 export const blockedBrowserCombos = new Set(["f5", "ctrl+r", "ctrl+shift+r", "ctrl+f5"]);

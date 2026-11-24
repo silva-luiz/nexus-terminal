@@ -29,7 +29,10 @@
     "close": "Cerrar",
     "nav": {
       "general": "General",
-      "shells": "Shells"
+      "shells": "Shells",
+      "appearance": "Apariencia",
+      "language": "Idioma",
+      "keybindings": "Atajos"
     },
     "warning": "No se pudo leer el archivo de configuración, así que se usan los valores predeterminados. Al guardar un cambio, el archivo original se conservará como settings.json.bak.",
     "saveError": "No se pudo guardar la configuración: {{error}}",
@@ -88,6 +91,82 @@
       "git": "Git",
       "linux": "Linux",
       "terminal": "Terminal"
+    },
+    "appearance": {
+      "mode": "Modo",
+      "mode_system": "Seguir a Windows",
+      "mode_dark": "Siempre oscuro",
+      "mode_light": "Siempre claro",
+      "darkTheme": "Tema oscuro",
+      "lightTheme": "Tema claro",
+      "inUse": "En uso",
+      "custom": "Importado",
+      "import": "Importar tema…",
+      "importHint": "Archivo JSON de Nexus Terminal o esquema de colores de Windows Terminal (uno, o varios en \"schemes\").",
+      "themeFiles": "Temas",
+      "imported_one": "Tema importado: {{names}}",
+      "imported_other": "{{count}} temas importados: {{names}}",
+      "importInvalid": "el archivo no contiene un tema válido.",
+      "importError": "No se pudo importar: {{error}}",
+      "deleteTheme": "Eliminar tema",
+      "deleteThemeTitle": "¿Eliminar tema?",
+      "deleteThemeMessage": "Se eliminará el tema \"{{name}}\".",
+      "terminal": "Terminal",
+      "font": "Fuente",
+      "fontHint": "Nombre de una fuente monoespaciada instalada. Si no existe, se usa Cascadia Mono o Consolas.",
+      "fontSize": "Tamaño",
+      "lineHeight": "Altura de línea",
+      "cursor": "Cursor",
+      "cursor_bar": "Barra",
+      "cursor_block": "Bloque",
+      "cursor_underline": "Subrayado",
+      "cursorBlink": "Cursor parpadeante"
+    },
+    "language": {
+      "label": "Idioma de la interfaz",
+      "system": "Seguir a Windows ({{language}})",
+      "note": "Los nombres de los perfiles de shell no se traducen; puedes renombrarlos en Shells."
+    },
+    "keybindings": {
+      "intro": "Haz clic en un atajo para cambiarlo y pulsa la nueva combinación.",
+      "search": "Buscar acción o atajo",
+      "action": "Acción",
+      "shortcut": "Atajo",
+      "options": "Opciones",
+      "none": "Sin atajo",
+      "record": "Haz clic para cambiar",
+      "recording": "Pulsa las teclas… (Esc cancela)",
+      "remove": "Quitar",
+      "reset": "Restablecer",
+      "resetAll": "Restablecer todos",
+      "resetAllTitle": "¿Restablecer atajos?",
+      "resetAllMessage": "Todos los atajos volverán a sus valores predeterminados.",
+      "needsModifier": "Usa Ctrl, Alt o Win con la tecla (o una tecla F), para no interferir al escribir en el terminal.",
+      "conflictTitle": "Atajo en uso",
+      "conflictMessage": "{{combo}} ya lo usa \"{{action}}\". ¿Usarlo aquí y quitarlo de allí?",
+      "replace": "Reemplazar",
+      "noResults": "No se encontraron acciones."
+    }
+  },
+  "actions": {
+    "tab": {
+      "new": "Nueva pestaña",
+      "newWithProfile": "Nueva pestaña con el perfil {{n}}",
+      "close": "Cerrar pestaña",
+      "rename": "Renombrar pestaña",
+      "next": "Pestaña siguiente",
+      "prev": "Pestaña anterior",
+      "goTo": "Ir a la pestaña {{n}}",
+      "goToLast": "Ir a la última pestaña",
+      "moveLeft": "Mover pestaña a la izquierda",
+      "moveRight": "Mover pestaña a la derecha"
+    },
+    "terminal": {
+      "copy": "Copiar",
+      "paste": "Pegar"
+    },
+    "app": {
+      "settings": "Abrir configuración"
     }
   }
 }
