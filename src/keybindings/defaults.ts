@@ -1,4 +1,4 @@
-/** Atalhos padrão (docs/05-configuracoes.md §5.4). As personalizações ficam em bindings.ts. */
+/** Atalhos padrão (docs/05-settings.md §5.4). As personalizações ficam em bindings.ts. */
 
 export type ActionId =
   | "tab.new"

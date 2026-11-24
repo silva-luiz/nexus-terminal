@@ -18,7 +18,7 @@ fn default_icon() -> String {
     "terminal".into()
 }
 
-/// Perfil de shell como fica salvo no settings.json (docs/05-configuracoes.md §5.1).
+/// Perfil de shell como fica salvo no settings.json (docs/05-settings.md §5.1).
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct Profile {

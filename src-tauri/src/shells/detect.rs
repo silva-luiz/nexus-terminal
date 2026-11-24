@@ -33,7 +33,7 @@ fn detected(id: &str, name: &str, icon: &str, command: &Path, args: &[&str]) -> 
     }
 }
 
-/// Procura os shells instalados (docs/05-configuracoes.md §5.1). PowerShell 5.1 vem primeiro.
+/// Procura os shells instalados (docs/05-settings.md §5.1). PowerShell 5.1 vem primeiro.
 pub fn detect_profiles() -> Vec<Profile> {
     let system_root = PathBuf::from(env("SystemRoot").unwrap_or_else(|| r"C:\Windows".into()));
     let path_var = env("PATH").unwrap_or_default();

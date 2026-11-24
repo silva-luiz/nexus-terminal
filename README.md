@@ -1,60 +1,60 @@
 # Nexus Terminal
 
-> Gerenciador de terminais para Windows: vários terminais em abas, organizados, renomeáveis e configuráveis (shell, idioma, tema e atalhos).
-> *Nome provisório.*
+> Terminal manager for Windows: many terminals in one window, organized as tabs, in a sidebar or side by side in a grid — renamable and configurable (shell, language, theme, shortcuts and layout).
 
-## Documentação
+## Documentation
 
-| # | Documento | Conteúdo |
+| # | Document | Contents |
 |---|-----------|----------|
-| 1 | [Visão geral](docs/01-visao-geral.md) | Objetivo, público, escopo, o que **não** é o projeto |
-| 2 | [Tecnologias](docs/02-tecnologias.md) | Stack escolhida, justificativas e alternativas |
-| 3 | [Arquitetura](docs/03-arquitetura.md) | Camadas, fluxo de dados, comandos IPC, estrutura de pastas |
-| 4 | [Features](docs/04-features.md) | Lista completa de funcionalidades com critérios de aceite |
-| 5 | [Configurações](docs/05-configuracoes.md) | Shells, idioma, temas, atalhos e o formato do `settings.json` |
-| 6 | [Ambiente de desenvolvimento](docs/06-ambiente-dev.md) | Instalação de ferramentas e criação do projeto do zero |
-| 7 | [Passo a passo / Roadmap](docs/07-passo-a-passo.md) | Fases de implementação, tarefa por tarefa |
-| 8 | [Testes, build e distribuição](docs/08-testes-build-distribuicao.md) | Estratégia de testes, instalador, assinatura, auto-update, CI |
-| 9 | [Convenções](docs/09-convencoes.md) | Padrões de código, commits, branches e versionamento |
+| 1 | [Overview](docs/01-overview.md) | Goal, audience, scope and what the project is **not** |
+| 2 | [Tech stack](docs/02-tech-stack.md) | Technologies used, rationale and alternatives |
+| 3 | [Architecture](docs/03-architecture.md) | Layers, data flow, IPC commands, folder structure |
+| 4 | [Features](docs/04-features.md) | Full feature list with acceptance criteria and status |
+| 5 | [Settings](docs/05-settings.md) | Shells, language, themes, shortcuts, layout and the `settings.json` format |
+| 6 | [Development environment](docs/06-dev-environment.md) | Installing the tools and running the project |
+| 7 | [Roadmap](docs/07-roadmap.md) | Implementation phases, done and next |
+| 8 | [Testing, build and release](docs/08-testing-build-release.md) | Test strategy, installers, signing, auto-update, CI |
+| 9 | [Conventions](docs/09-conventions.md) | Code, commit, branch and documentation standards |
 
-## Resumo rápido
+## At a glance
 
 - **Stack:** Tauri 2 (Rust) + React + TypeScript + Vite + xterm.js
-- **Terminal nativo:** ConPTY do Windows via crate `portable-pty`
-- **Shells suportados:** PowerShell 5.1, PowerShell 7, CMD, Git Bash, WSL e shell customizado
-- **Idiomas:** pt-BR, en-US, es-ES (i18next)
-- **Layout:** abas em cima ou na lateral (esquerda/direita) e modo grade com todos os terminais lado a lado
-- **Plataforma alvo:** Windows 10 (1809+) e Windows 11, x64 e ARM64
+- **Native terminal:** Windows ConPTY through the `portable-pty` crate
+- **Supported shells:** Windows PowerShell 5.1, PowerShell 7, Command Prompt, Git Bash, WSL and custom shells (detected automatically)
+- **Languages:** Portuguese (Brazil), English and Spanish (i18next)
+- **Layout:** tabs on top or in a sidebar (left/right) and a grid view with every terminal side by side
+- **Target platform:** Windows 10 (1809+) and Windows 11, x64 and ARM64
 
-## Como rodar
+## Getting started
 
-Pré-requisitos em [docs/06-ambiente-dev.md](docs/06-ambiente-dev.md) (Rust, Node 22, pnpm, Build Tools do Visual Studio).
+Prerequisites in [docs/06-dev-environment.md](docs/06-dev-environment.md) (Rust, Node 22, pnpm, Visual Studio Build Tools).
 
 ```powershell
 pnpm install
-pnpm dev          # abre o app em modo desenvolvimento
-pnpm test         # testes do frontend (Vitest) e do backend (cargo test)
-pnpm lint         # ESLint + clippy
-pnpm build        # gera os instaladores em src-tauri\target\release\bundle
-pnpm licenses:generate   # atualiza THIRD_PARTY_LICENSES.md
+pnpm dev                  # run the app in development mode
+pnpm test                 # frontend (Vitest) and backend (cargo test) tests
+pnpm lint                 # ESLint + clippy
+pnpm build                # build the installers into src-tauri\target\release\bundle
+pnpm licenses:generate    # refresh THIRD_PARTY_LICENSES.md
 ```
 
-Linha de comando do app instalado:
+Command line of the installed app:
 
 ```powershell
-nexus-terminal.exe -d C:\projetos\api   # abre o terminal (ou uma nova aba) na pasta indicada
+nexus-terminal.exe -d C:\projects\api   # opens the terminal (or a new tab) in that folder
 ```
 
-Versões: veja o [CHANGELOG](CHANGELOG.md). Para publicar, crie a tag `vX.Y.Z`; o workflow `release.yml` gera um release em **rascunho** com os instaladores, para revisar e publicar à mão.
+Versions: see the [CHANGELOG](CHANGELOG.md). To release, push a `vX.Y.Z` tag; the `release.yml` workflow creates a **draft** release with the installers for manual review and publishing.
 
 ## Status
 
-| Fase | Situação |
+| Phase | Status |
 |---|---|
-| 0 — Fundação | ✅ Projeto, lint, formatação, testes, CI |
-| 1 — Um terminal funcionando | ✅ ConPTY, xterm.js (WebGL), redimensionar, links, Unicode |
-| 2 — Várias abas + renomear | ✅ Abas, renomear (duplo clique/F2/menu), título automático, reordenar arrastando, menu de contexto, atalhos, reiniciar com Enter |
-| 3 — Configurações: shells e geral | ✅ Detecção (PowerShell 5.1/7, CMD, Git Bash, WSL), `settings.json`, tela de configurações (`Ctrl+,`), editor de perfis, confirmação ao fechar com programa rodando |
-| 4 — Temas, idioma e atalhos configuráveis | ✅ 8 temas embutidos + importação (inclusive do Windows Terminal), modo claro/escuro seguindo o Windows, fonte e cursor, idioma (pt-BR, en-US, es-ES) e atalhos personalizáveis com detecção de conflito |
-| 5 — Polimento e v1.0 | ✅ Barra de título própria, instância única, `-d <pasta>`, busca, zoom, limpar, opções de copiar/colar, confirmação ao fechar a janela, logs, seções Avançado e Sobre, ícone, licenças e instaladores |
-| 6 — Pós-v1.0 | ⏳ Painéis divididos, paleta de comandos, restaurar sessão, auto-update… |
+| 0 — Foundation | ✅ Project, lint, formatting, tests, CI |
+| 1 — One working terminal | ✅ ConPTY, xterm.js (WebGL), resizing, links, Unicode |
+| 2 — Multiple tabs + renaming | ✅ Tabs, renaming (double-click/F2/menu), automatic titles, drag to reorder, context menu, shortcuts, restart with Enter |
+| 3 — Settings: shells and general | ✅ Detection (PowerShell 5.1/7, CMD, Git Bash, WSL), `settings.json`, settings dialog (`Ctrl+,`), profile editor, close confirmation when a program is running |
+| 4 — Themes, language and shortcuts | ✅ 8 built-in themes + import (including Windows Terminal schemes), font and cursor, languages (pt-BR, en-US, es-ES) and customizable shortcuts with conflict detection |
+| 5 — Polish and v1.0 | ✅ Custom title bar, single instance, `-d <folder>`, search, zoom, clear, copy/paste options, window close confirmation, logs, Advanced and About sections, icon, licenses and installers |
+| Layout update | ✅ Tabs on top/left/right, grid view, single theme picker (unreleased) |
+| 6 — After v1.0 | ⏳ Split panes, command palette, session restore, auto-update… |

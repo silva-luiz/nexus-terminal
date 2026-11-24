@@ -1,7 +1,7 @@
 name: Release
 
-# Cria um release em RASCUNHO com os instaladores quando uma tag v* é enviada
-# (ex.: git tag v1.0.0 && git push origin v1.0.0). Revise o rascunho e publique à mão.
+# Creates a DRAFT release with the installers when a v* tag is pushed
+# (e.g. git tag v1.0.0 && git push origin v1.0.0). Review the draft and publish it manually.
 
 on:
   push:
@@ -44,12 +44,12 @@ jobs:
       - uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # Assinatura de código (opcional): configure os segredos e o
-          # bundle.windows.signCommand no tauri.conf.json — ver docs/08 §8.3.
+          # Code signing (optional): configure the secrets and
+          # bundle.windows.signCommand in tauri.conf.json — see docs/08 §8.3.
         with:
           tagName: ${{ github.ref_name }}
           releaseName: Nexus Terminal ${{ github.ref_name }}
-          releaseBody: Veja o CHANGELOG.md para as mudanças desta versão.
+          releaseBody: See CHANGELOG.md for the changes in this version.
           releaseDraft: true
           prerelease: false
           args: --target ${{ matrix.target }}

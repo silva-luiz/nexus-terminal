@@ -1,83 +1,84 @@
 # 4. Features
 
-Prioridade: **P0** = MVP (v1.0), **P1** = logo depois (v1.x), **P2** = futuro.
+Priority: **P0** = MVP (v1.0), **P1** = soon after (v1.x), **P2** = future. ✅ = done.
 
-## 4.1 Gerenciamento de terminais
+## 4.1 Terminal management
 
-| ID | Feature | Prioridade | Critérios de aceite |
+| ID | Feature | Status | Acceptance criteria |
 |---|---|---|---|
-| T-01 | Abrir novo terminal com o shell padrão | P0 | `Ctrl+Shift+T` ou botão `+` abre uma aba nova em até 500 ms |
-| T-02 | Abrir terminal escolhendo o shell | P0 | Seta ao lado do `+` lista os perfis; `Ctrl+Shift+1..9` abre o perfil N |
-| T-03 | Fechar terminal | P0 | `Ctrl+Shift+W`, botão `×` ou clique do meio na aba. Pergunta antes se houver processo rodando (configurável) |
-| T-04 | Indicar terminal encerrado | P0 | Quando o shell sai, a aba fica esmaecida e mostra "Processo encerrado (código X). Enter para reiniciar" |
-| T-05 | Reiniciar terminal | P1 | Menu de contexto → "Reiniciar" recria a sessão com o mesmo perfil e nome |
-| T-06 | Duplicar terminal | P1 | Abre uma nova aba com o mesmo perfil e a mesma pasta atual |
-| T-07 | Abrir em pasta específica | P1 | Argumento de linha de comando `nexus.exe -d "C:\projeto"` e opção "Abrir Nexus aqui" no menu do Explorer |
-| T-08 | Painéis divididos | P1 | `Alt+Shift+=` divide vertical, `Alt+Shift+-` horizontal, `Alt+setas` muda o foco, arrastar a divisória redimensiona |
-| T-09 | Instância única | P1 | Abrir o app de novo cria uma aba na janela existente em vez de outra janela |
-| T-10 | Múltiplas janelas | P2 | Arrastar aba para fora cria nova janela |
+| T-01 | Open a new terminal with the default shell | ✅ | `Ctrl+Shift+T` or the `+` button opens a new tab within 500 ms |
+| T-02 | Open a terminal choosing the shell | ✅ | The arrow next to `+` lists the profiles (with icons, default marked); `Ctrl+Shift+1..9` opens profile N |
+| T-03 | Close a terminal | ✅ | `Ctrl+Shift+W`, the `×` button or middle-click on the tab. Asks first if a program is running (configurable) |
+| T-04 | Show an exited terminal | ✅ | When the shell exits, the tab is dimmed and shows "Process exited (code X). Press Enter to restart" |
+| T-05 | Restart a terminal | ✅ | Context menu → "Restart" recreates the session with the same profile and name |
+| T-06 | Duplicate a terminal | P1 | Opens a new tab with the same profile and current folder |
+| T-07 | Open in a specific folder | ✅ / P1 | Command-line argument `nexus-terminal.exe -d "C:\project"` ✅; "Open Nexus here" in the Explorer menu (P1) |
+| T-08 | Split panes | P1 | `Alt+Shift+=` splits vertically, `Alt+Shift+-` horizontally, `Alt+arrows` move focus, dragging the divider resizes |
+| T-09 | Single instance | ✅ | Launching the app again creates a tab in the existing window instead of a new window |
+| T-10 | Multiple windows | P2 | Dragging a tab out creates a new window |
 
-## 4.2 Organização e identificação
+## 4.2 Organization and identification
 
-| ID | Feature | Prioridade | Critérios de aceite |
+| ID | Feature | Status | Acceptance criteria |
 |---|---|---|---|
-| O-01 | **Renomear terminal** | P0 | Duplo clique na aba, `F2` ou menu de contexto → "Renomear". `Enter` salva, `Esc` cancela, nome vazio volta ao padrão. Máx. 60 caracteres |
-| O-02 | Título automático do shell | P0 | Sem nome manual, a aba mostra o título enviado pelo shell (OSC 0/2) ou o nome do perfil |
-| O-03 | Cor da aba | P1 | Menu de contexto → "Cor" com 8 cores + "nenhuma". A cor aparece como faixa na aba |
-| O-04 | Ícone do perfil na aba | P0 | Cada aba mostra o ícone do shell (PowerShell, Git, CMD, Linux) |
-| O-05 | Reordenar abas | P0 | Arrastar e soltar; `Ctrl+Shift+PageUp/PageDown` move a aba ativa |
-| O-06 | Restaurar sessão | P1 | Ao reabrir, recria as abas com nomes, cores, perfis e pastas (não restaura processos) |
-| O-07 | Grupos de abas | P2 | Agrupar abas sob um nome (ex.: "Projeto X") e recolher/expandir |
-| O-08 | Barra lateral com lista de terminais | ✅ | Abas em cima, na lateral esquerda ou na direita (Configurações → Layout). Na lateral, a largura se ajusta arrastando a borda (ou com as setas, com a borda focada) e é salva |
-| O-10 | Modo grade | ✅ | `Ctrl+Shift+G` ou o botão na barra alterna entre "abas" (um terminal por vez) e "grade" (todos visíveis, na ordem das abas). Grade automática (2 → lado a lado, 3 → 2 em cima + 1 embaixo, 4 → 2×2…) ou com máximo de 1 a 4 colunas; a última linha se estica para não deixar buracos. Clique foca a célula; duplo clique no cabeçalho volta ao modo abas com aquele terminal. Trocar de modo não reinicia os terminais |
-| O-09 | Indicador de atividade | P1 | Aba em segundo plano mostra um ponto quando recebe saída nova |
+| O-01 | **Rename a terminal** | ✅ | Double-click the tab, `F2` or context menu → "Rename". `Enter` saves, `Esc` cancels, an empty name restores the default. Max 60 characters |
+| O-02 | Automatic title from the shell | ✅ | Without a manual name, the tab shows the title sent by the shell (OSC 0/2) or the profile name |
+| O-03 | Tab color | P1 | Context menu → "Color" with 8 colors + "none". The color shows as a stripe on the tab |
+| O-04 | Profile icon on the tab | ✅ | Each tab shows the shell icon (PowerShell, Git, CMD, Linux, generic) |
+| O-05 | Reorder tabs | ✅ | Drag and drop; `Ctrl+Shift+PageUp/PageDown` moves the active tab |
+| O-06 | Restore session | P1 | On startup, recreates tabs with names, colors, profiles and folders (does not restore processes) |
+| O-07 | Tab groups | P2 | Group tabs under a name (e.g. "Project X") and collapse/expand |
+| O-08 | Sidebar with the terminal list | ✅ | Tabs on top, on the left or on the right (Settings → Layout). In the sidebar, the width is adjusted by dragging its edge (or with the arrow keys when the edge is focused) and is saved |
+| O-09 | Activity indicator | P1 | A background tab shows a dot when it receives new output |
+| O-10 | Grid view | ✅ | `Ctrl+Shift+G` or the toolbar button toggles between "tabs" (one terminal at a time) and "grid" (all visible, in tab order). Automatic grid (2 → side by side, 3 → 2 on top + 1 below, 4 → 2×2…) or a maximum of 1 to 4 columns; the last row stretches so there are no holes. Clicking a cell focuses it; double-clicking its header returns to tabs mode with that terminal. Switching modes never restarts terminals |
 
-## 4.3 Navegação
+## 4.3 Navigation
 
-| ID | Feature | Prioridade | Critérios de aceite |
+| ID | Feature | Status | Acceptance criteria |
 |---|---|---|---|
-| N-01 | Próxima/anterior | P0 | `Ctrl+Tab` / `Ctrl+Shift+Tab` |
-| N-02 | Ir para aba N | P0 | `Ctrl+1..8`; `Ctrl+9` vai para a última |
-| N-03 | Alternador rápido | P1 | `Ctrl+P`: busca por nome entre os terminais abertos e foca o escolhido |
-| N-04 | Paleta de comandos | P1 | `Ctrl+Shift+P`: lista todas as ações do app com seus atalhos |
-| N-05 | Rolagem por teclado | P0 | `Ctrl+Shift+↑/↓` linha, `Shift+PageUp/PageDown` página |
+| N-01 | Next/previous | ✅ | `Ctrl+Tab` / `Ctrl+Shift+Tab` |
+| N-02 | Go to tab N | ✅ | `Ctrl+1..8`; `Ctrl+9` goes to the last one |
+| N-03 | Quick switcher | P1 | `Ctrl+P`: search open terminals by name and focus the chosen one |
+| N-04 | Command palette | P1 | `Ctrl+Shift+P`: lists every app action with its shortcut |
+| N-05 | Keyboard scrolling | P1 | `Ctrl+Shift+↑/↓` by line, `Shift+PageUp/PageDown` by page |
 
-## 4.4 Uso do terminal
+## 4.4 Using the terminal
 
-| ID | Feature | Prioridade | Critérios de aceite |
+| ID | Feature | Status | Acceptance criteria |
 |---|---|---|---|
-| U-01 | Copiar/colar | P0 | `Ctrl+Shift+C` / `Ctrl+Shift+V`; `Ctrl+C` copia se houver seleção, senão envia SIGINT (configurável); clique direito cola (configurável) |
-| U-02 | Buscar no terminal | P0 | `Ctrl+Shift+F` abre barra de busca com "diferenciar maiúsculas" e "regex" |
-| U-03 | Links clicáveis | P0 | URLs viram links; `Ctrl+clique` abre no navegador |
-| U-04 | Zoom | P0 | `Ctrl+=`, `Ctrl+-`, `Ctrl+0`, `Ctrl+roda do mouse` |
-| U-05 | Limpar terminal | P0 | `Ctrl+Shift+K` limpa a tela e o histórico de rolagem |
-| U-06 | Histórico de rolagem configurável | P0 | Padrão 10.000 linhas |
-| U-07 | Unicode/emoji e cores 24-bit | P0 | `echo` com emoji e cores RGB aparecem corretamente |
-| U-08 | Colar com várias linhas | P1 | Pede confirmação antes de colar texto com quebras de linha |
-| U-09 | Arrastar arquivo para o terminal | P1 | Solta o caminho entre aspas no prompt |
-| U-10 | Notificação ao fim de comando longo | P2 | Notificação do Windows quando uma aba em segundo plano emite sino (BEL) |
+| U-01 | Copy/paste | ✅ | `Ctrl+Shift+C` / `Ctrl+Shift+V`; `Ctrl+C` copies when there is a selection, otherwise sends an interrupt (configurable); right-click copies/pastes (configurable) |
+| U-02 | Search in the terminal | ✅ | `Ctrl+Shift+F` opens a search bar with match case, whole word and regex, plus a result counter |
+| U-03 | Clickable links | ✅ | URLs become links; `Ctrl+click` opens them in the browser |
+| U-04 | Zoom | ✅ | `Ctrl+=`, `Ctrl+-`, `Ctrl+0`, `Ctrl+mouse wheel` (session only, not saved) |
+| U-05 | Clear terminal | ✅ | `Ctrl+Shift+K` clears the screen and scrollback |
+| U-06 | Configurable scrollback | ✅ | Default 10,000 lines (1,000–100,000) |
+| U-07 | Unicode/emoji and 24-bit color | ✅ | `echo` with emoji and RGB colors renders correctly |
+| U-08 | Multi-line paste | ✅ | Asks for confirmation before pasting text with line breaks (configurable) |
+| U-09 | Drag a file into the terminal | P1 | Drops the quoted path at the prompt |
+| U-10 | Notification when a long command ends | P2 | Windows notification when a background tab rings the bell (BEL) |
 
-## 4.5 Configurações
+## 4.5 Settings
 
-Detalhadas em [05-configuracoes.md](05-configuracoes.md).
+Detailed in [05-settings.md](05-settings.md).
 
-| ID | Feature | Prioridade |
+| ID | Feature | Status |
 |---|---|---|
-| C-01 | Escolher shell padrão e gerenciar perfis | P0 |
-| C-02 | Detectar shells instalados automaticamente | P0 |
-| C-03 | Idioma (pt-BR, en-US, es-ES) com troca imediata | P0 |
-| C-04 | Temas embutidos (claro/escuro) e troca imediata | P0 |
-| C-05 | Importar/exportar tema (JSON, compatível com Windows Terminal) | P1 |
-| C-06 | Editor visual de tema | P2 |
-| C-07 | Personalizar atalhos com gravação de tecla e aviso de conflito | P0 |
-| C-08 | Fonte, tamanho, altura de linha, estilo do cursor | P0 |
-| C-09 | Opacidade/efeito Mica/Acrylic da janela | P1 |
-| C-10 | Abrir `settings.json` no editor e recarregar ao salvar | P1 |
-| C-11 | Restaurar padrões | P0 |
+| C-01 | Choose the default shell and manage profiles | ✅ |
+| C-02 | Detect installed shells automatically | ✅ |
+| C-03 | Language (pt-BR, en-US, es-ES) with live switching | ✅ |
+| C-04 | Built-in themes (dark and light) with live switching | ✅ |
+| C-05 | Import themes (JSON, Windows Terminal compatible) | ✅ (export: P1) |
+| C-06 | Visual theme editor | P2 |
+| C-07 | Customize shortcuts with key recording and conflict warnings | ✅ |
+| C-08 | Font, size, line height, cursor style | ✅ |
+| C-09 | Window opacity / Mica / Acrylic effect | P1 |
+| C-10 | Open `settings.json` in an editor and reload on save | P1 (a button opens the settings folder) |
+| C-11 | Restore defaults | ✅ (shortcuts) |
+| C-12 | Layout: tab position and tabs/grid view | ✅ |
 
-## 4.6 Futuro (P2, inspirado no Warp)
+## 4.6 Future (P2, inspired by Warp)
 
-- **Blocos de comando:** agrupar cada comando com sua saída, copiar só a saída, recolher blocos. Exige integração com o shell (OSC 133 / FinalTerm) por script injetado no perfil.
-- **Editor de entrada moderno:** edição com mouse, multi-linha, autocomplete.
-- **Workflows/snippets:** comandos salvos com parâmetros, acessíveis pela paleta.
-- **Launch configurations:** abrir um conjunto de abas já nomeadas com comandos iniciais (ex.: "Projeto X" abre `API`, `Web` e `Git`).
+- **Command blocks:** group each command with its output, copy only the output, collapse blocks. Requires shell integration (OSC 133 / FinalTerm) through a script injected by the profile.
+- **Modern input editor:** mouse editing, multi-line, autocomplete.
+- **Workflows/snippets:** saved commands with parameters, available from the palette.
+- **Launch configurations:** open a set of named tabs with startup commands (e.g. "Project X" opens `API`, `Web` and `Git`).

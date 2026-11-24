@@ -2,7 +2,7 @@ import { z } from "zod";
 import { HEX_COLOR, isDark, mix } from "./color";
 import { slugify } from "../settings/profiles";
 
-/** Formato de tema (docs/05-configuracoes.md §5.3). */
+/** Formato de tema (docs/05-settings.md §5.3). */
 
 export const ANSI_KEYS = [
   "black",

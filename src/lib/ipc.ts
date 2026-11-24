@@ -1,7 +1,7 @@
 import { Channel, invoke } from "@tauri-apps/api/core";
 import type { LoadedSettings, Settings } from "./types";
 
-/** Único ponto do frontend que conversa com o backend (ver docs/03-arquitetura.md §3.3). */
+/** Único ponto do frontend que conversa com o backend (ver docs/03-architecture.md §3.3). */
 
 export type PtyEvent = { type: "data"; data: string } | { type: "exit"; code: number | null };
 

@@ -44,7 +44,7 @@ impl Default for GeneralSettings {
     }
 }
 
-/// Conteúdo do settings.json (docs/05-configuracoes.md §5.6).
+/// Conteúdo do settings.json (docs/05-settings.md §5.7).
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct Settings {
@@ -135,7 +135,7 @@ impl SettingsStore {
         Self { dir: dir.into() }
     }
 
-    /// `%APPDATA%\NexusTerminal` (docs/03-arquitetura.md §3.10).
+    /// `%APPDATA%\NexusTerminal` (docs/03-architecture.md §3.11).
     pub fn default_dir() -> PathBuf {
         super::paths::config_dir()
     }

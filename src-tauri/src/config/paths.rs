@@ -8,7 +8,7 @@ fn env_dir(var: &str) -> PathBuf {
         .unwrap_or_else(std::env::temp_dir)
 }
 
-/// `%APPDATA%\NexusTerminal`: settings.json e temas (docs/03-arquitetura.md §3.10).
+/// `%APPDATA%\NexusTerminal`: settings.json e temas (docs/03-architecture.md §3.11).
 pub fn config_dir() -> PathBuf {
     env_dir("APPDATA").join(APP_DIR)
 }
