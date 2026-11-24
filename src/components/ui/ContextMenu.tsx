@@ -1,8 +1,10 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 
 export interface MenuItem {
   label: string;
   hint?: string;
+  /** Ícone opcional à esquerda do texto. */
+  icon?: ReactNode;
   disabled?: boolean;
   onSelect(): void;
 }
@@ -70,7 +72,10 @@ export function ContextMenu({ x, y, items, onClose }: Props) {
               item.onSelect();
             }}
           >
-            <span>{item.label}</span>
+            <span className="context-menu__label">
+              {item.icon}
+              {item.label}
+            </span>
             {item.hint && <kbd>{item.hint}</kbd>}
           </button>
         ),

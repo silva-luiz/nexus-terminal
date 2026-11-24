@@ -25,17 +25,28 @@ import {
 import { shortcutLabel } from "../../keybindings/bindings";
 import { isAppShortcut } from "../../keybindings/useGlobalShortcuts";
 import { useSessions, type TerminalTab } from "../../stores/sessions";
+import { useSettings } from "../../stores/settings";
 import { useUi } from "../../stores/ui";
+import type { CellRect } from "../../layout/grid";
+import { setViewMode } from "../../layout/useLayout";
 import { ContextMenu, type MenuEntry } from "../ui/ContextMenu";
+import { ProfileIcon } from "../ui/ProfileIcon";
 
 interface Props {
   tab: TerminalTab;
-  active: boolean;
+  /** Terminal com o foco (a aba ativa). */
+  focused: boolean;
+  /** Visível na tela: só o ativo no modo abas; todos no modo grade. */
+  visible: boolean;
+  /** Posição na grade; null = ocupa a área inteira (modo abas). */
+  cell: CellRect | null;
 }
+
+const percent = (n: number) => `${n * 100}%`;
 
 const RESIZE_DEBOUNCE_MS = 50;
 
-export function TerminalView({ tab, active }: Props) {
+export function TerminalView({ tab, focused, visible, cell }: Props) {
   const { t } = useTranslation();
   const containerRef = useRef<HTMLDivElement>(null);
   const termRef = useRef<Terminal | null>(null);
@@ -217,13 +228,13 @@ export function TerminalView({ tab, active }: Props) {
   }, [tabId, profileId, generation, cwd]);
 
   useEffect(() => {
-    if (!active) return;
+    if (!focused) return;
     const frame = requestAnimationFrame(() => {
       fitRef.current?.fit();
       termRef.current?.focus();
     });
     return () => cancelAnimationFrame(frame);
-  }, [active, generation]);
+  }, [focused, generation]);
 
   const onContextMenu = (event: React.MouseEvent) => {
     event.preventDefault();
@@ -265,14 +276,59 @@ export function TerminalView({ tab, active }: Props) {
     });
   };
 
+  const classes = [
+    "terminal-view",
+    visible && "is-visible",
+    focused && "is-focused",
+    cell && "terminal-view--cell",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   return (
     <div
-      className={`terminal-view${active ? " is-active" : ""}`}
-      aria-hidden={!active}
+      className={classes}
+      aria-hidden={!visible}
+      style={
+        cell
+          ? {
+              left: percent(cell.x),
+              top: percent(cell.y),
+              width: percent(cell.w),
+              height: percent(cell.h),
+            }
+          : undefined
+      }
+      // Clicar numa célula da grade a torna o terminal ativo.
+      onMouseDownCapture={() => {
+        if (!focused) useSessions.getState().activate(tabId);
+      }}
       onContextMenu={onContextMenu}
     >
+      {cell && <CellHeader tab={tab} />}
       <div ref={containerRef} className="terminal-host" />
       {menu && <ContextMenu {...menu} onClose={closeMenu} />}
+    </div>
+  );
+}
+
+/** Cabeçalho de uma célula da grade. Duplo clique volta ao modo abas com este terminal. */
+function CellHeader({ tab }: { tab: TerminalTab }) {
+  const { t } = useTranslation();
+  const icon = useSettings(
+    (s) => s.settings?.profiles.find((p) => p.id === tab.profileId)?.icon ?? "terminal",
+  );
+  return (
+    <div
+      className={`cell-header${tab.status === "exited" ? " is-exited" : ""}`}
+      title={t("layout.cellHint")}
+      onDoubleClick={() => {
+        useSessions.getState().activate(tab.id);
+        setViewMode("tabs");
+      }}
+    >
+      <ProfileIcon icon={icon} />
+      <span className="cell-header__title">{tab.title}</span>
     </div>
   );
 }

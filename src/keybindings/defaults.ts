@@ -19,6 +19,7 @@ export type ActionId =
   | "terminal.zoomOut"
   | "terminal.zoomReset"
   | "app.settings"
+  | "app.toggleGrid"
   | "app.toggleFullscreen";
 
 export interface Keybinding {
@@ -55,6 +56,7 @@ export const defaultKeybindings: Keybinding[] = [
   { action: "terminal.zoomOut", keys: "ctrl+-" },
   { action: "terminal.zoomReset", keys: "ctrl+0" },
   { action: "app.settings", keys: "ctrl+," },
+  { action: "app.toggleGrid", keys: "ctrl+shift+g" },
   { action: "app.toggleFullscreen", keys: "f11" },
 ];
 

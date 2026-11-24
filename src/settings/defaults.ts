@@ -1,6 +1,7 @@
 import { z } from "zod";
 import type {
   AppearanceSettings,
+  LayoutSettings,
   TerminalSettings,
   KeybindingOverride,
   LanguageSetting,
@@ -13,11 +14,7 @@ import type {
  * (editado à mão, por exemplo) cai no padrão sem afetar os outros.
  */
 
-export const DEFAULT_THEME: ThemeSettings = {
-  mode: "system",
-  dark: "nexus-dark",
-  light: "nexus-light",
-};
+export const DEFAULT_THEME: ThemeSettings = { selected: "nexus-dark" };
 
 export const DEFAULT_APPEARANCE: AppearanceSettings = {
   fontFamily: "Cascadia Code",
@@ -69,6 +66,37 @@ const terminalSchema = z.object({
   screenReaderMode: z.boolean().catch(DEFAULT_TERMINAL.screenReaderMode),
 });
 
+export const SIDEBAR_WIDTH = { min: 140, max: 480 } as const;
+
+export const DEFAULT_LAYOUT: LayoutSettings = {
+  tabPosition: "top",
+  viewMode: "tabs",
+  gridColumns: "auto",
+  sidebarWidth: 220,
+};
+
+const layoutSchema = z.object({
+  tabPosition: z.enum(["top", "left", "right"]).catch(DEFAULT_LAYOUT.tabPosition),
+  viewMode: z.enum(["tabs", "grid"]).catch(DEFAULT_LAYOUT.viewMode),
+  gridColumns: z
+    .union([z.literal("auto"), z.literal(1), z.literal(2), z.literal(3), z.literal(4)])
+    .catch(DEFAULT_LAYOUT.gridColumns),
+  sidebarWidth: z
+    .number()
+    .min(SIDEBAR_WIDTH.min)
+    .max(SIDEBAR_WIDTH.max)
+    .catch(DEFAULT_LAYOUT.sidebarWidth),
+});
+
+/** Lê a seção `layout` (aceita o valor cru, para uso com seletores do store). */
+export function parseLayout(raw: unknown): LayoutSettings {
+  return layoutSchema.parse(raw ?? {});
+}
+
+export function readLayout(settings: Settings | null): LayoutSettings {
+  return parseLayout(settings?.layout);
+}
+
 /** Opções de copiar/colar (ficam em `general` no settings.json). */
 export function readClipboard(settings: Settings | null): ClipboardSettings {
   return clipboardSchema.parse(settings?.general ?? {});
@@ -78,10 +106,18 @@ export function readTerminal(settings: Settings | null): TerminalSettings {
   return terminalSchema.parse(settings?.terminal ?? {});
 }
 
+const optionalId = z.string().min(1).optional().catch(undefined);
+
+/**
+ * Versões até a 1.0 guardavam `{ mode, dark, light }` (seguir o Windows / escuro / claro).
+ * Esses campos ainda são lidos para manter a escolha de quem atualizar: o modo "claro" usa
+ * o tema claro; os outros, o escuro.
+ */
 const themeSchema = z.object({
-  mode: z.enum(["system", "dark", "light"]).catch(DEFAULT_THEME.mode),
-  dark: z.string().min(1).catch(DEFAULT_THEME.dark),
-  light: z.string().min(1).catch(DEFAULT_THEME.light),
+  selected: optionalId,
+  mode: z.enum(["system", "dark", "light"]).optional().catch(undefined),
+  dark: optionalId,
+  light: optionalId,
 });
 
 const appearanceSchema = z.object({
@@ -103,7 +139,9 @@ const keybindingsSchema = z
   .catch([]);
 
 export function readTheme(settings: Settings | null): ThemeSettings {
-  return themeSchema.parse(settings?.theme ?? {});
+  const raw = themeSchema.parse(settings?.theme ?? {});
+  const legacy = raw.mode === "light" ? raw.light : raw.dark;
+  return { selected: raw.selected ?? legacy ?? DEFAULT_THEME.selected };
 }
 
 export function readAppearance(settings: Settings | null): AppearanceSettings {

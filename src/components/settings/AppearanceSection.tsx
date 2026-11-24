@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { open } from "@tauri-apps/plugin-dialog";
-import type { AppearanceSettings, Settings, ThemeMode, ThemeSettings } from "../../lib/types";
+import type { AppearanceSettings, Settings } from "../../lib/types";
 import { FONT_SIZE, LINE_HEIGHT, readAppearance, readTheme } from "../../settings/defaults";
 import { useSettings } from "../../stores/settings";
 import { allThemes, useThemes } from "../../stores/themes";
@@ -9,7 +9,6 @@ import { useUi } from "../../stores/ui";
 import { resolveTheme } from "../../themes/resolve";
 import type { Theme } from "../../themes/theme";
 
-const MODES: ThemeMode[] = ["system", "dark", "light"];
 const FONT_SUGGESTIONS = [
   "Cascadia Code",
   "Cascadia Mono",
@@ -34,17 +33,16 @@ export function AppearanceSection({ settings }: { settings: Settings }) {
   const { t } = useTranslation();
   const update = useSettings((s) => s.update);
   const userThemes = useThemes((s) => s.userThemes);
-  const systemDark = useThemes((s) => s.systemDark);
   const [message, setMessage] = useState<Message>(null);
   const [importing, setImporting] = useState(false);
 
   const themeSettings = readTheme(settings);
   const appearance = readAppearance(settings);
   const themes = allThemes(userThemes);
-  const current = resolveTheme(themeSettings, themes, systemDark);
+  const current = resolveTheme(themeSettings, themes);
 
-  const setTheme = (patch: Partial<ThemeSettings>) =>
-    void update((s) => ({ ...s, theme: { ...readTheme(s), ...patch } }));
+  // Grava só o tema escolhido (descarta os campos antigos de modo claro/escuro).
+  const setTheme = (selected: string) => void update((s) => ({ ...s, theme: { selected } }));
   const setAppearance = (patch: Partial<AppearanceSettings>) =>
     void update((s) => ({ ...s, appearance: { ...readAppearance(s), ...patch } }));
 
@@ -59,7 +57,7 @@ export function AppearanceSection({ settings }: { settings: Settings }) {
     setImporting(true);
     try {
       const added = await useThemes.getState().importFile(path);
-      setTheme({ [added[0].type]: added[0].id });
+      setTheme(added[0].id);
       setMessage({
         kind: "ok",
         text: t("settings.appearance.imported", {
@@ -94,56 +92,35 @@ export function AppearanceSection({ settings }: { settings: Settings }) {
     }
   };
 
-  const themeGrid = (type: Theme["type"]) => (
-    <div
-      className="theme-grid"
-      role="radiogroup"
-      aria-label={t(`settings.appearance.${type}Theme`)}
-    >
-      {themes
-        .filter((th) => th.type === type)
-        .map((th) => (
-          <ThemeCard
-            key={th.id}
-            theme={th}
-            selected={themeSettings[type] === th.id}
-            inUse={current.id === th.id}
-            inUseLabel={t("settings.appearance.inUse")}
-            customLabel={t("settings.appearance.custom")}
-            deleteLabel={t("settings.appearance.deleteTheme")}
-            onSelect={() => setTheme({ [type]: th.id })}
-            onDelete={th.source === "user" ? () => void deleteTheme(th) : undefined}
-          />
-        ))}
+  const themeGroup = (type: Theme["type"]) => (
+    <div className="theme-group">
+      <span className="theme-group__label">{t(`settings.appearance.group_${type}`)}</span>
+      <div className="theme-grid">
+        {themes
+          .filter((th) => th.type === type)
+          .map((th) => (
+            <ThemeCard
+              key={th.id}
+              theme={th}
+              selected={current.id === th.id}
+              customLabel={t("settings.appearance.custom")}
+              deleteLabel={t("settings.appearance.deleteTheme")}
+              onSelect={() => setTheme(th.id)}
+              onDelete={th.source === "user" ? () => void deleteTheme(th) : undefined}
+            />
+          ))}
+      </div>
     </div>
   );
 
   return (
     <div className="settings-form">
-      <fieldset className="field">
-        <legend>{t("settings.appearance.mode")}</legend>
-        <div className="segmented">
-          {MODES.map((mode) => (
-            <button
-              key={mode}
-              type="button"
-              className="segmented__item"
-              aria-pressed={themeSettings.mode === mode}
-              onClick={() => setTheme({ mode })}
-            >
-              {t(`settings.appearance.mode_${mode}`)}
-            </button>
-          ))}
-        </div>
-      </fieldset>
-
-      <div className="field">
-        <span className="field__label">{t("settings.appearance.darkTheme")}</span>
-        {themeGrid("dark")}
-      </div>
-      <div className="field">
-        <span className="field__label">{t("settings.appearance.lightTheme")}</span>
-        {themeGrid("light")}
+      <div className="field" role="radiogroup" aria-labelledby="theme-label">
+        <span id="theme-label" className="field__label">
+          {t("settings.appearance.theme")}
+        </span>
+        {themeGroup("dark")}
+        {themeGroup("light")}
       </div>
 
       <div className="field">
@@ -268,8 +245,6 @@ function FontInput({ value, onCommit }: { value: string; onCommit(value: string)
 function ThemeCard(props: {
   theme: Theme;
   selected: boolean;
-  inUse: boolean;
-  inUseLabel: string;
   customLabel: string;
   deleteLabel: string;
   onSelect(): void;
@@ -302,7 +277,6 @@ function ThemeCard(props: {
         </span>
         <span className="theme-card__name">
           {theme.name}
-          {props.inUse && <span className="badge badge--accent">{props.inUseLabel}</span>}
           {theme.source === "user" && <span className="badge">{props.customLabel}</span>}
         </span>
       </button>

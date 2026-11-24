@@ -2,6 +2,21 @@
 
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/); versões seguem [SemVer](https://semver.org/lang/pt-BR/).
 
+## [Não lançado]
+
+### Adicionado
+- Posição das abas: em cima, na lateral esquerda ou na lateral direita (Configurações → Layout), com largura da barra lateral ajustável.
+- Modo grade: todos os terminais visíveis lado a lado, organizados automaticamente ou com máximo de colunas; alternar com `Ctrl+Shift+G` ou pelo botão na barra.
+- Menu de escolha do shell mostra o ícone de cada perfil e qual é o padrão.
+
+### Alterado
+- Aparência: um único seletor de tema (agrupado em escuros e claros); removida a opção de modo (seguir o Windows / sempre escuro / sempre claro). A escolha feita na versão anterior é mantida.
+- Botão de nova aba virou um botão dividido maior: "+" abre o shell padrão e a seta abre a lista de shells.
+- Tela Sobre reorganizada (tamanhos, pesos e espaçamentos).
+
+### Corrigido
+- Opções de posição das abas (Layout) sem espaçamento e com tamanhos diferentes: os estilos da seção não tinham sido aplicados.
+
 ## [1.0.0] - 2026-11-24
 
 Primeira versão.

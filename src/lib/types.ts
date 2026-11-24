@@ -28,14 +28,9 @@ export interface GeneralSettings {
   [key: string]: unknown;
 }
 
-export type ThemeMode = "system" | "dark" | "light";
-
 export interface ThemeSettings {
-  mode: ThemeMode;
-  /** Tema usado no modo escuro. */
-  dark: string;
-  /** Tema usado no modo claro. */
-  light: string;
+  /** ID do tema em uso. */
+  selected: string;
 }
 
 export type CursorStyle = "bar" | "block" | "underline";
@@ -52,6 +47,20 @@ export interface TerminalSettings {
   scrollback: number;
   renderer: "webgl" | "dom";
   screenReaderMode: boolean;
+}
+
+export type TabPosition = "top" | "left" | "right";
+export type ViewMode = "tabs" | "grid";
+
+export interface LayoutSettings {
+  /** Onde ficam as abas: em cima (horizontal) ou numa barra lateral. */
+  tabPosition: TabPosition;
+  /** "tabs": um terminal por vez; "grid": todos os terminais lado a lado. */
+  viewMode: ViewMode;
+  /** Máximo de colunas da grade ("auto" = o mais quadrado possível). */
+  gridColumns: "auto" | 1 | 2 | 3 | 4;
+  /** Largura da barra lateral, em pixels. */
+  sidebarWidth: number;
 }
 
 export type LanguageSetting = "system" | "pt-BR" | "en-US" | "es-ES";
@@ -72,6 +81,7 @@ export interface Settings {
   appearance?: AppearanceSettings;
   keybindings?: KeybindingOverride[];
   terminal?: TerminalSettings;
+  layout?: LayoutSettings;
   [key: string]: unknown;
 }
 

@@ -10,7 +10,9 @@
     "renameLabel": "Terminal name",
     "empty": "No terminals open",
     "emptyHint": "Press {{shortcut}} to open a new terminal",
-    "settings": "Settings"
+    "settings": "Settings",
+    "closeBelow": "Close tabs below",
+    "default": "default"
   },
   "terminal": {
     "exited": "Process exited (code {{code}}). Press Enter to restart.",
@@ -35,7 +37,8 @@
       "language": "Language",
       "keybindings": "Shortcuts",
       "advanced": "Advanced",
-      "about": "About"
+      "about": "About",
+      "layout": "Layout"
     },
     "warning": "The settings file could not be read, so the defaults are in use. When you save a change, the original file will be kept as settings.json.bak.",
     "saveError": "Could not save settings: {{error}}",
@@ -105,13 +108,6 @@
       "terminal": "Terminal"
     },
     "appearance": {
-      "mode": "Mode",
-      "mode_system": "Follow Windows",
-      "mode_dark": "Always dark",
-      "mode_light": "Always light",
-      "darkTheme": "Dark theme",
-      "lightTheme": "Light theme",
-      "inUse": "In use",
       "custom": "Imported",
       "import": "Import theme…",
       "importHint": "Nexus Terminal JSON file or Windows Terminal color scheme (one, or several under \"schemes\").",
@@ -132,7 +128,10 @@
       "cursor_bar": "Bar",
       "cursor_block": "Block",
       "cursor_underline": "Underline",
-      "cursorBlink": "Blinking cursor"
+      "cursorBlink": "Blinking cursor",
+      "theme": "Theme",
+      "group_dark": "Dark",
+      "group_light": "Light"
     },
     "language": {
       "label": "Interface language",
@@ -181,6 +180,22 @@
       "builtWith": "Built with",
       "themeCredits": "Theme credits",
       "licensesHint": "Full licenses are in THIRD_PARTY_NOTICES.md and THIRD_PARTY_LICENSES.md, next to the source code."
+    },
+    "layout": {
+      "tabPosition": "Tab position",
+      "position_top": "Top",
+      "position_left": "Left sidebar",
+      "position_right": "Right sidebar",
+      "tabPositionHint": "In the sidebar, drag its edge to change the width.",
+      "viewMode": "View",
+      "view_tabs": "Tabs (one terminal at a time)",
+      "view_grid": "Grid (all side by side)",
+      "viewModeHint": "You can also switch with the button in the bar or {{shortcut}}. The app remembers the last mode used.",
+      "gridColumns": "Maximum grid columns",
+      "columnsAuto": "Automatic",
+      "gridColumnsHint": "Automatic keeps the grid as square as possible.",
+      "gridPreview_one": "With {{count}} open terminal: {{cols}} column(s) × {{rows}} row(s).",
+      "gridPreview_other": "With {{count}} open terminals: {{cols}} column(s) × {{rows}} row(s)."
     }
   },
   "actions": {
@@ -207,7 +222,8 @@
     },
     "app": {
       "settings": "Open settings",
-      "toggleFullscreen": "Full screen"
+      "toggleFullscreen": "Full screen",
+      "toggleGrid": "Toggle grid / tabs"
     }
   },
   "window": {
@@ -234,5 +250,12 @@
     "message_other": "The text has {{count}} lines and may run commands when pasted:\n\n{{preview}}",
     "confirm": "Paste",
     "cancel": "Cancel"
+  },
+  "layout": {
+    "showGrid": "Show all in a grid",
+    "showTabs": "Show one terminal at a time",
+    "terminals": "Terminals",
+    "resizeSidebar": "Resize sidebar",
+    "cellHint": "Click to focus; double-click to show only this terminal"
   }
 }

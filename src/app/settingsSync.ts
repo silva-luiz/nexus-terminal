@@ -12,14 +12,14 @@ import {
 import { visibleProfiles } from "../settings/profiles";
 import { useSessions } from "../stores/sessions";
 import { useSettings } from "../stores/settings";
-import { allThemes, useThemes, watchSystemTheme } from "../stores/themes";
+import { allThemes, useThemes } from "../stores/themes";
 import { applyUiTheme, terminalTheme } from "../themes/apply";
 import { resolveTheme } from "../themes/resolve";
 
 /** Aplica no app tudo o que vem das configurações: perfis, tema, aparência, idioma e atalhos. */
 function applySettings(): void {
   const settings = useSettings.getState().settings;
-  const { userThemes, systemDark } = useThemes.getState();
+  const { userThemes } = useThemes.getState();
 
   if (settings) {
     useSessions.getState().setProfiles(
@@ -28,7 +28,7 @@ function applySettings(): void {
     );
   }
 
-  const theme = resolveTheme(readTheme(settings), allThemes(userThemes), systemDark);
+  const theme = resolveTheme(readTheme(settings), allThemes(userThemes));
   applyUiTheme(theme);
   const appearance = readAppearance(settings);
   const terminal = readTerminal(settings);
@@ -51,17 +51,15 @@ function applySettings(): void {
   useKeybindings.getState().setOverrides(readKeybindings(settings));
 }
 
-/** Começa a acompanhar mudanças nas configurações, nos temas e no modo do Windows. */
+/** Começa a acompanhar mudanças nas configurações e nos temas. */
 export function startSettingsSync(): () => void {
   applySettings();
   const stopSettings = useSettings.subscribe((state, previous) => {
     if (state.settings !== previous.settings) applySettings();
   });
   const stopThemes = useThemes.subscribe(applySettings);
-  const stopSystem = watchSystemTheme();
   return () => {
     stopSettings();
     stopThemes();
-    stopSystem();
   };
 }

@@ -2,6 +2,7 @@ import { useSessions } from "../stores/sessions";
 import { useUi } from "../stores/ui";
 import { changeZoom, clearActiveTerminal, copySelection, pasteIntoActive } from "../lib/terminals";
 import { toggleFullscreen } from "../lib/window";
+import { toggleViewMode } from "../layout/useLayout";
 import { requestCloseTab } from "../lib/closeTabs";
 import type { ActionId } from "./defaults";
 
@@ -55,6 +56,8 @@ export function runAction(action: ActionId): void {
       return changeZoom("reset");
     case "app.settings":
       return useUi.getState().openSettings();
+    case "app.toggleGrid":
+      return toggleViewMode();
     case "app.toggleFullscreen":
       return void toggleFullscreen();
   }

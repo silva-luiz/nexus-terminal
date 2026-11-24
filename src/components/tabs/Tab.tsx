@@ -12,10 +12,11 @@ interface Props {
   tab: TerminalTab;
   index: number;
   active: boolean;
+  orientation: "horizontal" | "vertical";
   onContextMenu(event: MouseEvent, tab: TerminalTab): void;
 }
 
-export function Tab({ tab, index, active, onContextMenu }: Props) {
+export function Tab({ tab, index, active, orientation, onContextMenu }: Props) {
   const { t } = useTranslation();
   const renaming = useSessions((s) => s.renamingId === tab.id);
   const { activate, startRename, move } = useSessions.getState();
@@ -36,6 +37,7 @@ export function Tab({ tab, index, active, onContextMenu }: Props) {
 
   const classes = [
     "tab",
+    orientation === "vertical" && "tab--vertical",
     active && "is-active",
     tab.status === "exited" && "is-exited",
     dropTarget && "is-drop-target",

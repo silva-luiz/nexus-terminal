@@ -28,7 +28,8 @@ Prioridade: **P0** = MVP (v1.0), **P1** = logo depois (v1.x), **P2** = futuro.
 | O-05 | Reordenar abas | P0 | Arrastar e soltar; `Ctrl+Shift+PageUp/PageDown` move a aba ativa |
 | O-06 | Restaurar sessão | P1 | Ao reabrir, recria as abas com nomes, cores, perfis e pastas (não restaura processos) |
 | O-07 | Grupos de abas | P2 | Agrupar abas sob um nome (ex.: "Projeto X") e recolher/expandir |
-| O-08 | Barra lateral com lista de terminais | P2 | Alternativa vertical à barra de abas, útil com muitos terminais |
+| O-08 | Barra lateral com lista de terminais | ✅ | Abas em cima, na lateral esquerda ou na direita (Configurações → Layout). Na lateral, a largura se ajusta arrastando a borda (ou com as setas, com a borda focada) e é salva |
+| O-10 | Modo grade | ✅ | `Ctrl+Shift+G` ou o botão na barra alterna entre "abas" (um terminal por vez) e "grade" (todos visíveis, na ordem das abas). Grade automática (2 → lado a lado, 3 → 2 em cima + 1 embaixo, 4 → 2×2…) ou com máximo de 1 a 4 colunas; a última linha se estica para não deixar buracos. Clique foca a célula; duplo clique no cabeçalho volta ao modo abas com aquele terminal. Trocar de modo não reinicia os terminais |
 | O-09 | Indicador de atividade | P1 | Aba em segundo plano mostra um ponto quando recebe saída nova |
 
 ## 4.3 Navegação

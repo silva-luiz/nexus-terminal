@@ -136,12 +136,6 @@ button {
   opacity: 1;
 }
 
-.tab-bar__actions {
-  display: flex;
-  align-items: center;
-  padding: 0 4px;
-}
-
 .icon-button {
   display: grid;
   place-items: center;
@@ -153,11 +147,6 @@ button {
   background: transparent;
   color: var(--color-text-muted);
   font-size: 18px;
-}
-
-.icon-button--narrow {
-  width: 20px;
-  font-size: 11px;
 }
 
 .icon-button:hover:not(:disabled) {
@@ -186,7 +175,7 @@ button {
   visibility: hidden;
 }
 
-.terminal-view.is-active {
+.terminal-view.is-visible {
   visibility: visible;
 }
 
@@ -982,21 +971,405 @@ textarea:focus {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.about__header {
+/* ---------- Layout: abas na lateral e modo grade ---------- */
+
+.toolbar-group {
   display: flex;
   align-items: center;
-  gap: 14px;
-  margin-bottom: 12px;
+  padding: 0 4px;
+}
+
+.title-bar {
+  display: flex;
+  align-items: stretch;
+  height: 34px;
+  flex-shrink: 0;
+  background: var(--color-tab-inactive);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.title-bar__logo {
+  align-self: center;
+  margin: 0 8px 0 12px;
+}
+
+.title-bar__title {
+  flex: 1;
+  min-width: 0;
+  align-self: center;
+  overflow: hidden;
+  font-size: 12px;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.workspace {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.workspace--right {
+  flex-direction: row-reverse;
+}
+
+.workspace .terminal-area {
+  min-width: 0;
+}
+
+.sidebar {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  background: var(--color-tab-inactive);
+}
+
+.sidebar--left {
+  border-right: 1px solid var(--color-border);
+}
+
+.sidebar--right {
+  border-left: 1px solid var(--color-border);
+}
+
+.sidebar__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 36px;
+  padding-left: 12px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.sidebar__label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.sidebar__tabs {
+  flex: 1;
+  overflow-y: auto;
+  padding: 4px 0;
+}
+
+.sidebar__resize {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 5;
+  width: 6px;
+  cursor: col-resize;
+}
+
+.sidebar--left .sidebar__resize {
+  right: -3px;
+}
+
+.sidebar--right .sidebar__resize {
+  left: -3px;
+}
+
+.sidebar__resize:hover,
+.sidebar__resize:focus-visible {
+  background: color-mix(in srgb, var(--color-accent) 45%, transparent);
+  outline: none;
+}
+
+.tab.tab--vertical {
+  min-width: 0;
+  max-width: none;
+  height: 34px;
+  padding: 0 6px 0 12px;
+  border-right: 0;
+}
+
+.tab.tab--vertical.is-active::before {
+  inset: 0 auto 0 0;
+  width: 2px;
+  height: auto;
+}
+
+.sidebar--right .tab.tab--vertical.is-active::before {
+  inset: 0 0 0 auto;
+}
+
+.tab.tab--vertical.is-drop-target {
+  box-shadow: inset 0 2px 0 var(--color-accent);
+}
+
+/* Modo grade: cada terminal ocupa uma célula; o ativo ganha a borda de destaque. */
+.terminal-area--grid {
+  background: var(--color-border);
+}
+
+.terminal-view--cell {
+  inset: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  border: 1px solid var(--color-border);
+  background: var(--color-tab-active);
+}
+
+.terminal-view--cell.is-focused {
+  border-color: var(--color-accent);
+  z-index: 1;
+}
+
+.terminal-view--cell .terminal-host {
+  flex: 1;
+  min-height: 0;
+  padding: 4px 4px 4px 8px;
+}
+
+.cell-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 24px;
+  flex-shrink: 0;
+  padding: 0 8px;
+  background: var(--color-tab-inactive);
+  font-size: 12px;
+  color: var(--color-text-muted);
+  cursor: default;
+}
+
+.terminal-view--cell.is-focused .cell-header {
+  color: var(--color-text);
+}
+
+.cell-header.is-exited .cell-header__title {
+  font-style: italic;
+  opacity: 0.6;
+}
+
+.cell-header__title {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* ---------- Botão dividido "nova aba" ---------- */
+
+.split-button {
+  display: inline-flex;
+  align-items: stretch;
+  height: 28px;
+  margin: 0 4px;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+}
+
+.split-button:hover,
+.split-button:focus-within {
+  border-color: var(--color-border);
+}
+
+.split-button__main,
+.split-button__menu {
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-text-muted);
+}
+
+.split-button__main {
+  width: 30px;
+  border-radius: var(--radius) 0 0 var(--radius);
+}
+
+.split-button__menu {
+  width: 24px;
+  border-left: 1px solid transparent;
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+
+.split-button:hover .split-button__menu,
+.split-button:focus-within .split-button__menu {
+  border-left-color: var(--color-border);
+}
+
+.split-button__main:hover,
+.split-button__menu:hover:not(:disabled) {
+  background: var(--color-surface-hover);
+  color: var(--color-text);
+}
+
+.split-button__menu:disabled {
+  opacity: 0.4;
+}
+
+.context-menu__label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ---------- Seção Layout: opções de posição das abas ---------- */
+
+.layout-options {
+  display: grid;
+  grid-template-columns: repeat(3, 132px);
+  gap: 12px;
+}
+
+.layout-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 96px;
+  padding: 12px 8px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface);
+  font-size: 12px;
+  text-align: center;
+}
+
+.layout-option:hover {
+  border-color: var(--color-text-muted);
+}
+
+.layout-option[aria-pressed="true"] {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 1px var(--color-accent);
+}
+
+.layout-option__preview {
+  flex-shrink: 0;
+  width: 64px;
+  height: 40px;
+}
+
+.preview-frame {
+  fill: var(--color-tab-active);
+  stroke: var(--color-border);
+}
+
+.preview-tabs {
+  fill: var(--color-accent);
+  opacity: 0.55;
+}
+
+/* ---------- Aparência: grupos de temas ---------- */
+
+.theme-group + .theme-group {
+  margin-top: 14px;
+}
+
+.theme-group__label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+/* ---------- Sobre ---------- */
+
+.about {
+  max-width: 560px;
+}
+
+.about__hero {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.about__logo {
+  flex-shrink: 0;
+  border-radius: 14px;
 }
 
 .about__name {
-  margin: 0 0 2px;
-  font-size: 17px;
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.2;
 }
 
-.about__list {
-  margin: 0 0 8px;
-  padding-left: 18px;
+.about__version {
+  margin: 4px 0 0;
+  font-size: 12px;
   color: var(--color-text-muted);
+}
+
+.about__description {
+  margin: 20px 0 28px;
+  font-size: 13px;
   line-height: 1.6;
+}
+
+.about__section {
+  margin-bottom: 24px;
+}
+
+.about__heading {
+  margin: 0 0 10px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.chip {
+  padding: 3px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  background: var(--color-background);
+  font-size: 12px;
+}
+
+.about__credits {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+}
+
+.about__credit {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 12px;
+  font-size: 13px;
+}
+
+.about__credit dt {
+  font-weight: 600;
+}
+
+.about__credit dd {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+.about__footnote {
+  margin: 0;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border);
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--color-text-muted);
 }

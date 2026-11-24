@@ -10,7 +10,9 @@
     "renameLabel": "Nome do terminal",
     "empty": "Nenhum terminal aberto",
     "emptyHint": "Pressione {{shortcut}} para abrir um novo terminal",
-    "settings": "Configurações"
+    "settings": "Configurações",
+    "closeBelow": "Fechar abas abaixo",
+    "default": "padrão"
   },
   "terminal": {
     "exited": "Processo encerrado (código {{code}}). Pressione Enter para reiniciar.",
@@ -35,7 +37,8 @@
       "language": "Idioma",
       "keybindings": "Atalhos",
       "advanced": "Avançado",
-      "about": "Sobre"
+      "about": "Sobre",
+      "layout": "Layout"
     },
     "warning": "Não foi possível ler o arquivo de configurações, então os padrões estão em uso. Ao salvar uma alteração, o arquivo original será guardado como settings.json.bak.",
     "saveError": "Não foi possível salvar as configurações: {{error}}",
@@ -105,13 +108,6 @@
       "terminal": "Terminal"
     },
     "appearance": {
-      "mode": "Modo",
-      "mode_system": "Seguir o Windows",
-      "mode_dark": "Sempre escuro",
-      "mode_light": "Sempre claro",
-      "darkTheme": "Tema escuro",
-      "lightTheme": "Tema claro",
-      "inUse": "Em uso",
       "custom": "Importado",
       "import": "Importar tema…",
       "importHint": "Arquivo JSON do Nexus Terminal ou esquema de cores do Windows Terminal (um ou vários em \"schemes\").",
@@ -132,7 +128,10 @@
       "cursor_bar": "Barra",
       "cursor_block": "Bloco",
       "cursor_underline": "Sublinhado",
-      "cursorBlink": "Cursor piscando"
+      "cursorBlink": "Cursor piscando",
+      "theme": "Tema",
+      "group_dark": "Escuros",
+      "group_light": "Claros"
     },
     "language": {
       "label": "Idioma da interface",
@@ -181,6 +180,22 @@
       "builtWith": "Feito com",
       "themeCredits": "Créditos dos temas",
       "licensesHint": "As licenças completas estão em THIRD_PARTY_NOTICES.md e THIRD_PARTY_LICENSES.md, junto ao código."
+    },
+    "layout": {
+      "tabPosition": "Posição das abas",
+      "position_top": "Em cima",
+      "position_left": "Lateral esquerda",
+      "position_right": "Lateral direita",
+      "tabPositionHint": "Na lateral, arraste a borda da barra para mudar a largura.",
+      "viewMode": "Visualização",
+      "view_tabs": "Abas (um terminal por vez)",
+      "view_grid": "Grade (todos lado a lado)",
+      "viewModeHint": "Também dá para alternar pelo botão na barra ou com {{shortcut}}. O app lembra o último modo usado.",
+      "gridColumns": "Máximo de colunas na grade",
+      "columnsAuto": "Automático",
+      "gridColumnsHint": "Automático deixa a grade o mais quadrada possível.",
+      "gridPreview_one": "Com {{count}} terminal aberto: {{cols}} coluna(s) × {{rows}} linha(s).",
+      "gridPreview_other": "Com {{count}} terminais abertos: {{cols}} coluna(s) × {{rows}} linha(s)."
     }
   },
   "actions": {
@@ -207,7 +222,8 @@
     },
     "app": {
       "settings": "Abrir configurações",
-      "toggleFullscreen": "Tela cheia"
+      "toggleFullscreen": "Tela cheia",
+      "toggleGrid": "Alternar grade / abas"
     }
   },
   "window": {
@@ -234,5 +250,12 @@
     "message_other": "O texto tem {{count}} linhas e pode executar comandos ao ser colado:\n\n{{preview}}",
     "confirm": "Colar",
     "cancel": "Cancelar"
+  },
+  "layout": {
+    "showGrid": "Ver todos em grade",
+    "showTabs": "Ver um terminal por vez",
+    "terminals": "Terminais",
+    "resizeSidebar": "Ajustar largura da barra lateral",
+    "cellHint": "Clique para focar; duplo clique para ver só este terminal"
   }
 }

@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { getVersion } from "@tauri-apps/api/app";
 
-const STACK = ["Tauri 2", "React", "xterm.js", "ConPTY (portable-pty)"];
-const THEME_CREDITS = [
-  "Dracula — draculatheme.com",
-  "One Half — Son A. Pham",
-  "Solarized — Ethan Schoonover",
-  "Nord — Arctic Ice Studio",
+const STACK = ["Tauri 2", "React", "xterm.js", "ConPTY"];
+const THEME_CREDITS: [theme: string, author: string][] = [
+  ["Dracula", "draculatheme.com"],
+  ["One Half", "Son A. Pham"],
+  ["Solarized", "Ethan Schoonover"],
+  ["Nord", "Arctic Ice Studio"],
 ];
 
 export function AboutSection() {
@@ -21,26 +21,43 @@ export function AboutSection() {
   }, []);
 
   return (
-    <div className="settings-form about">
-      <div className="about__header">
-        <img className="about__logo" src="/logo.svg" alt="" width={56} height={56} />
+    <div className="about">
+      <header className="about__hero">
+        <img className="about__logo" src="/logo.svg" alt="" width={64} height={64} />
         <div>
-          <h4 className="about__name">Nexus Terminal</h4>
-          <p className="field__hint">{version ? t("settings.about.version", { version }) : "…"}</p>
+          <h3 className="about__name">Nexus Terminal</h3>
+          <p className="about__version">
+            {version ? t("settings.about.version", { version }) : "…"}
+          </p>
         </div>
-      </div>
-      <p>{t("settings.about.description")}</p>
+      </header>
 
-      <h4 className="settings-form__title">{t("settings.about.builtWith")}</h4>
-      <p className="field__hint">{STACK.join(" · ")}</p>
+      <p className="about__description">{t("settings.about.description")}</p>
 
-      <h4 className="settings-form__title">{t("settings.about.themeCredits")}</h4>
-      <ul className="about__list">
-        {THEME_CREDITS.map((credit) => (
-          <li key={credit}>{credit}</li>
-        ))}
-      </ul>
-      <p className="field__hint">{t("settings.about.licensesHint")}</p>
+      <section className="about__section">
+        <h4 className="about__heading">{t("settings.about.builtWith")}</h4>
+        <ul className="chip-list">
+          {STACK.map((item) => (
+            <li key={item} className="chip">
+              {item}
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section className="about__section">
+        <h4 className="about__heading">{t("settings.about.themeCredits")}</h4>
+        <dl className="about__credits">
+          {THEME_CREDITS.map(([theme, author]) => (
+            <div key={theme} className="about__credit">
+              <dt>{theme}</dt>
+              <dd>{author}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+
+      <p className="about__footnote">{t("settings.about.licensesHint")}</p>
     </div>
   );
 }

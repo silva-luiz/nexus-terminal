@@ -91,21 +91,13 @@ describe("importação", () => {
 });
 
 describe("escolha do tema", () => {
-  const settings = { mode: "system" as const, dark: "dracula", light: "solarized-light" };
-
-  it("segue o sistema ou o modo fixo", () => {
-    expect(resolveTheme(settings, builtinThemes, true).id).toBe("dracula");
-    expect(resolveTheme(settings, builtinThemes, false).id).toBe("solarized-light");
-    expect(resolveTheme({ ...settings, mode: "dark" }, builtinThemes, false).id).toBe("dracula");
+  it("usa o tema escolhido, claro ou escuro", () => {
+    expect(resolveTheme({ selected: "dracula" }, builtinThemes).id).toBe("dracula");
+    expect(resolveTheme({ selected: "solarized-light" }, builtinThemes).id).toBe("solarized-light");
   });
 
-  it("volta ao Nexus quando o tema não existe mais", () => {
-    expect(resolveTheme({ ...settings, dark: "apagado" }, builtinThemes, true).id).toBe(
-      "nexus-dark",
-    );
-    expect(resolveTheme({ ...settings, light: "apagado" }, builtinThemes, false).id).toBe(
-      "nexus-light",
-    );
+  it("volta ao Nexus Dark quando o tema não existe mais", () => {
+    expect(resolveTheme({ selected: "apagado" }, builtinThemes).id).toBe("nexus-dark");
   });
 
   it("não deixa tema importado substituir um embutido", () => {

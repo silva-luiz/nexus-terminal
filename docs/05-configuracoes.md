@@ -109,14 +109,15 @@ Aplicação:
 - A barra de título do Windows acompanha o tipo do tema (`setTheme("dark" | "light")`).
 - `ui` é opcional no arquivo: cores ausentes são derivadas de `terminal` (fundo, texto e azul), em `themes/theme.ts → deriveUi`.
 
-Modo (`settings.theme`):
+Tema em uso (`settings.theme`):
 
 ```jsonc
-"theme": { "mode": "system", "dark": "dracula", "light": "nexus-light" }
-// mode: "system" (segue o Windows) | "dark" (sempre o tema escuro) | "light" (sempre o claro)
+"theme": { "selected": "dracula" }
 ```
 
-Se o tema escolhido não existir mais (ex.: tema importado excluído), o app usa Nexus Dark ou Nexus Light.
+- A tela Aparência mostra um único seletor, com os temas agrupados em **Escuros** e **Claros**.
+- Se o tema escolhido não existir mais (ex.: tema importado excluído), o app usa o Nexus Dark.
+- Compatibilidade: até a v1.0 o arquivo guardava `{ "mode": "system" | "dark" | "light", "dark": "...", "light": "..." }`. Sem `selected`, o app usa o tema claro se `mode` for `"light"` e o escuro nos outros casos; ao escolher um tema, os campos antigos são substituídos.
 
 Temas embutidos: Nexus Dark, Nexus Light, Dracula, One Half Dark, One Half Light, Solarized Dark, Solarized Light e Nord (paletas de terceiros sob licença MIT, créditos em `THIRD_PARTY_NOTICES.md`).
 
@@ -153,6 +154,7 @@ Aparência do terminal (`settings.appearance`): família da fonte (padrão `Casc
 | `app.commandPalette` | `Ctrl+Shift+P` |
 | `app.settings` | `Ctrl+,` |
 | `app.toggleFullscreen` | `F11` |
+| `app.toggleGrid` | `Ctrl+Shift+G` |
 
 ### Formato no `settings.json`
 
@@ -178,6 +180,21 @@ Tela de atalhos:
 - No xterm, usar `term.attachCustomKeyEventHandler(e => !isAppShortcut(e))`.
 - **Não** usar como padrão atalhos que shells usam (`Ctrl+C`, `Ctrl+D`, `Ctrl+R`, `Ctrl+L`, `Ctrl+A/E`, `Alt+B/F`). Por isso os padrões usam `Ctrl+Shift`.
 - Tela de atalhos: tabela com busca, coluna "Atalho" clicável que abre o **gravador** ("Pressione a combinação..."), aviso de conflito ("Já usado por: Fechar aba — substituir?"), botões "Remover" e "Restaurar padrão".
+
+### Layout (`settings.layout`)
+
+```jsonc
+"layout": {
+  "tabPosition": "top",   // "top" | "left" | "right"
+  "viewMode": "tabs",     // "tabs" (um terminal por vez) | "grid" (todos lado a lado)
+  "gridColumns": "auto",  // "auto" | 1 | 2 | 3 | 4 — máximo de colunas da grade
+  "sidebarWidth": 220     // 140–480, largura da barra lateral em pixels
+}
+```
+
+- Com as abas na lateral, a barra de título fica fina (logo, nome do terminal ativo, botões e controles da janela) e a lista de terminais vai para a barra lateral. "Fechar abas à direita" vira "Fechar abas abaixo".
+- `viewMode` é salvo quando o usuário alterna pelo botão ou atalho: o app abre no último modo usado.
+- Implementação: os terminais nunca são desmontados ao trocar de modo; só mudam de posição (`layout/grid.ts → gridRects`), então nada se perde.
 
 ## 5.5 Geral e Avançado
 
@@ -206,7 +223,7 @@ O zoom (`Ctrl+=`, `Ctrl+-`, `Ctrl+0`, `Ctrl+roda`) vale só para a sessão atual
   "$schema": "https://.../settings.schema.json",
   "version": 1,
   "language": "pt-BR",
-  "theme": { "mode": "system", "dark": "nexus-dark", "light": "nexus-light" },
+  "theme": { "selected": "nexus-dark" },
   "appearance": { "fontFamily": "Cascadia Code", "fontSize": 14, "lineHeight": 1.2, "cursorStyle": "bar", "cursorBlink": true },
   "general": { "defaultProfile": "git-bash", "restoreSession": true },
   "profiles": [ /* ... */ ],

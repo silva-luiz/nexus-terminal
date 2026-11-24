@@ -23,6 +23,7 @@
 - **Terminal nativo:** ConPTY do Windows via crate `portable-pty`
 - **Shells suportados:** PowerShell 5.1, PowerShell 7, CMD, Git Bash, WSL e shell customizado
 - **Idiomas:** pt-BR, en-US, es-ES (i18next)
+- **Layout:** abas em cima ou na lateral (esquerda/direita) e modo grade com todos os terminais lado a lado
 - **Plataforma alvo:** Windows 10 (1809+) e Windows 11, x64 e ARM64
 
 ## Como rodar
