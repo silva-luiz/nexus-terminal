@@ -1,0 +1,16 @@
+/* Tema Nexus Dark. Na Fase 4 estas variáveis passam a ser definidas pelo tema escolhido. */
+:root {
+  --color-background: #14161b;
+  --color-surface: #1c1f26;
+  --color-surface-hover: #232731;
+  --color-border: #2a2e37;
+  --color-text: #e6e6e6;
+  --color-text-muted: #8b93a1;
+  --color-accent: #5b8cff;
+  --color-tab-active: #1c1f26;
+  --color-tab-inactive: #14161b;
+
+  --font-ui: "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif;
+  --tab-bar-height: 38px;
+  --radius: 6px;
+}

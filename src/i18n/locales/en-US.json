@@ -1,0 +1,19 @@
+{
+  "tabs": {
+    "new": "New tab",
+    "openProfile": "Open with profile",
+    "rename": "Rename",
+    "restart": "Restart",
+    "close": "Close",
+    "closeOthers": "Close other tabs",
+    "closeToRight": "Close tabs to the right",
+    "renameLabel": "Terminal name",
+    "empty": "No terminals open",
+    "emptyHint": "Press {{shortcut}} to open a new terminal"
+  },
+  "terminal": {
+    "exited": "Process exited (code {{code}}). Press Enter to restart.",
+    "exitedNoCode": "Process exited. Press Enter to restart.",
+    "spawnError": "Could not start the shell: {{error}}"
+  }
+}

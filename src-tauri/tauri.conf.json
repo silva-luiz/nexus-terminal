@@ -1,0 +1,44 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Nexus Terminal",
+  "version": "0.1.0",
+  "identifier": "com.nexusterminal.app",
+  "build": {
+    "beforeDevCommand": "pnpm web:dev",
+    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "pnpm web:build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "main",
+        "title": "Nexus Terminal",
+        "width": 1100,
+        "height": 700,
+        "minWidth": 600,
+        "minHeight": 400,
+        "center": true,
+        "backgroundColor": "#14161b"
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": [
+      "nsis",
+      "msi"
+    ],
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ]
+  },
+  "mainBinaryName": "nexus-terminal"
+}

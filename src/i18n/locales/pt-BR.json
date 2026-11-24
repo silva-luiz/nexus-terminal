@@ -1,0 +1,19 @@
+{
+  "tabs": {
+    "new": "Nova aba",
+    "openProfile": "Abrir com perfil",
+    "rename": "Renomear",
+    "restart": "Reiniciar",
+    "close": "Fechar",
+    "closeOthers": "Fechar outras abas",
+    "closeToRight": "Fechar abas à direita",
+    "renameLabel": "Nome do terminal",
+    "empty": "Nenhum terminal aberto",
+    "emptyHint": "Pressione {{shortcut}} para abrir um novo terminal"
+  },
+  "terminal": {
+    "exited": "Processo encerrado (código {{code}}). Pressione Enter para reiniciar.",
+    "exitedNoCode": "Processo encerrado. Pressione Enter para reiniciar.",
+    "spawnError": "Não foi possível iniciar o shell: {{error}}"
+  }
+}
