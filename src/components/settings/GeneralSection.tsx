@@ -1,12 +1,25 @@
 import { useTranslation } from "react-i18next";
 import type { Settings } from "../../lib/types";
+import { readClipboard, type ClipboardSettings } from "../../settings/defaults";
 import { setDefaultProfile, visibleProfiles } from "../../settings/profiles";
 import { useSettings } from "../../stores/settings";
+import { CheckboxField } from "./CheckboxField";
+
+const CLIPBOARD_OPTIONS: (keyof ClipboardSettings)[] = [
+  "ctrlCCopiesSelection",
+  "copyOnSelect",
+  "rightClickPaste",
+  "confirmMultilinePaste",
+];
 
 export function GeneralSection({ settings }: { settings: Settings }) {
   const { t } = useTranslation();
   const update = useSettings((s) => s.update);
   const profiles = visibleProfiles(settings);
+  const clipboard = readClipboard(settings);
+
+  const setGeneral = (patch: Partial<Settings["general"]>) =>
+    void update((s) => ({ ...s, general: { ...s.general, ...patch } }));
 
   return (
     <div className="settings-form">
@@ -26,21 +39,25 @@ export function GeneralSection({ settings }: { settings: Settings }) {
         <p className="field__hint">{t("settings.general.defaultProfileHint")}</p>
       </div>
 
-      <div className="field field--checkbox">
-        <input
-          id="confirm-close"
-          type="checkbox"
-          checked={settings.general.confirmCloseRunning}
-          onChange={(event) => {
-            const checked = event.target.checked;
-            void update((s) => ({ ...s, general: { ...s.general, confirmCloseRunning: checked } }));
-          }}
+      <CheckboxField
+        id="confirm-close"
+        label={t("settings.general.confirmCloseRunning")}
+        hint={t("settings.general.confirmCloseRunningHint")}
+        checked={settings.general.confirmCloseRunning}
+        onChange={(confirmCloseRunning) => setGeneral({ confirmCloseRunning })}
+      />
+
+      <h4 className="settings-form__title">{t("settings.general.clipboard")}</h4>
+      {CLIPBOARD_OPTIONS.map((key) => (
+        <CheckboxField
+          key={key}
+          id={`clipboard-${key}`}
+          label={t(`settings.general.${key}`)}
+          hint={t(`settings.general.${key}Hint`)}
+          checked={clipboard[key]}
+          onChange={(checked) => setGeneral({ [key]: checked })}
         />
-        <div>
-          <label htmlFor="confirm-close">{t("settings.general.confirmCloseRunning")}</label>
-          <p className="field__hint">{t("settings.general.confirmCloseRunningHint")}</p>
-        </div>
-      </div>
+      ))}
     </div>
   );
 }

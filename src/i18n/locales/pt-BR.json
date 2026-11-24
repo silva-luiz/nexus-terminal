@@ -22,7 +22,8 @@
     "message": "Há um programa em execução em \"{{name}}\". Fechar mesmo assim?",
     "messageMany": "Há programas em execução em {{count}} terminais. Fechar mesmo assim?",
     "confirm": "Fechar",
-    "cancel": "Cancelar"
+    "cancel": "Cancelar",
+    "windowTitle": "Fechar o Nexus Terminal?"
   },
   "settings": {
     "title": "Configurações",
@@ -32,7 +33,9 @@
       "shells": "Shells",
       "appearance": "Aparência",
       "language": "Idioma",
-      "keybindings": "Atalhos"
+      "keybindings": "Atalhos",
+      "advanced": "Avançado",
+      "about": "Sobre"
     },
     "warning": "Não foi possível ler o arquivo de configurações, então os padrões estão em uso. Ao salvar uma alteração, o arquivo original será guardado como settings.json.bak.",
     "saveError": "Não foi possível salvar as configurações: {{error}}",
@@ -41,7 +44,16 @@
       "defaultProfile": "Shell padrão",
       "defaultProfileHint": "Usado ao abrir uma nova aba.",
       "confirmCloseRunning": "Confirmar antes de fechar um terminal com programa em execução",
-      "confirmCloseRunningHint": "Ex.: um servidor rodando, uma sessão SSH ou um editor aberto."
+      "confirmCloseRunningHint": "Ex.: um servidor rodando, uma sessão SSH ou um editor aberto.",
+      "clipboard": "Copiar e colar",
+      "ctrlCCopiesSelection": "Ctrl+C copia quando há texto selecionado",
+      "ctrlCCopiesSelectionHint": "Sem seleção, Ctrl+C continua interrompendo o comando.",
+      "copyOnSelect": "Copiar ao selecionar",
+      "copyOnSelectHint": "O texto vai para a área de transferência assim que é selecionado.",
+      "rightClickPaste": "Clique direito copia/cola",
+      "rightClickPasteHint": "Copia se houver seleção, senão cola. Desligado: abre um menu.",
+      "confirmMultilinePaste": "Confirmar antes de colar várias linhas",
+      "confirmMultilinePasteHint": "Evita executar vários comandos colados por engano."
     },
     "shells": {
       "intro": "Perfis disponíveis para novas abas. A ordem define os atalhos Ctrl+Shift+1…9.",
@@ -146,6 +158,29 @@
       "conflictMessage": "{{combo}} já é usado por \"{{action}}\". Usar nesta ação e remover de lá?",
       "replace": "Substituir",
       "noResults": "Nenhuma ação encontrada."
+    },
+    "advanced": {
+      "scrollback": "Histórico de rolagem",
+      "lines_one": "{{formatted}} linha",
+      "lines_other": "{{formatted}} linhas",
+      "scrollbackHint": "Quantas linhas cada terminal guarda para rolar para cima.",
+      "renderer": "Renderizador",
+      "renderer_webgl": "GPU (WebGL) — mais rápido",
+      "renderer_dom": "Compatível (sem GPU)",
+      "rendererHint": "Vale para terminais abertos depois da mudança.",
+      "screenReader": "Modo leitor de tela",
+      "screenReaderHint": "Expõe o texto do terminal para leitores de tela (NVDA, Narrador). Pode deixar o terminal mais lento.",
+      "folders": "Pastas",
+      "openConfig": "Abrir pasta de configurações",
+      "openLogs": "Abrir pasta de logs",
+      "foldersHint": "As configurações ficam em %APPDATA%\\NexusTerminal e os logs em %LOCALAPPDATA%\\NexusTerminal\\logs."
+    },
+    "about": {
+      "version": "Versão {{version}}",
+      "description": "Gerenciador de terminais para Windows: vários shells em abas, organizados e com nome.",
+      "builtWith": "Feito com",
+      "themeCredits": "Créditos dos temas",
+      "licensesHint": "As licenças completas estão em THIRD_PARTY_NOTICES.md e THIRD_PARTY_LICENSES.md, junto ao código."
     }
   },
   "actions": {
@@ -163,10 +198,41 @@
     },
     "terminal": {
       "copy": "Copiar",
-      "paste": "Colar"
+      "paste": "Colar",
+      "find": "Buscar no terminal",
+      "clear": "Limpar terminal",
+      "zoomIn": "Aumentar zoom",
+      "zoomOut": "Diminuir zoom",
+      "zoomReset": "Restaurar zoom"
     },
     "app": {
-      "settings": "Abrir configurações"
+      "settings": "Abrir configurações",
+      "toggleFullscreen": "Tela cheia"
     }
+  },
+  "window": {
+    "minimize": "Minimizar",
+    "maximize": "Maximizar",
+    "restore": "Restaurar",
+    "close": "Fechar"
+  },
+  "search": {
+    "placeholder": "Buscar",
+    "caseSensitive": "Diferenciar maiúsculas",
+    "wholeWord": "Palavra inteira",
+    "regex": "Expressão regular",
+    "previous": "Anterior",
+    "next": "Próximo",
+    "close": "Fechar busca",
+    "noResults": "Nenhum resultado",
+    "position": "{{index}} de {{count}}",
+    "invalid": "Expressão inválida"
+  },
+  "paste": {
+    "title": "Colar várias linhas?",
+    "message_one": "O texto tem {{count}} linha e pode executar comandos ao ser colado:\n\n{{preview}}",
+    "message_other": "O texto tem {{count}} linhas e pode executar comandos ao ser colado:\n\n{{preview}}",
+    "confirm": "Colar",
+    "cancel": "Cancelar"
   }
 }

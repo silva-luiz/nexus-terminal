@@ -1,3 +1,4 @@
+pub mod paths;
 mod settings;
 mod state;
 mod themes;

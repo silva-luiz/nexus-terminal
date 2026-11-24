@@ -22,7 +22,8 @@
     "message": "Hay un programa en ejecución en \"{{name}}\". ¿Cerrar de todos modos?",
     "messageMany": "Hay programas en ejecución en {{count}} terminales. ¿Cerrar de todos modos?",
     "confirm": "Cerrar",
-    "cancel": "Cancelar"
+    "cancel": "Cancelar",
+    "windowTitle": "¿Cerrar Nexus Terminal?"
   },
   "settings": {
     "title": "Configuración",
@@ -32,7 +33,9 @@
       "shells": "Shells",
       "appearance": "Apariencia",
       "language": "Idioma",
-      "keybindings": "Atajos"
+      "keybindings": "Atajos",
+      "advanced": "Avanzado",
+      "about": "Acerca de"
     },
     "warning": "No se pudo leer el archivo de configuración, así que se usan los valores predeterminados. Al guardar un cambio, el archivo original se conservará como settings.json.bak.",
     "saveError": "No se pudo guardar la configuración: {{error}}",
@@ -41,7 +44,16 @@
       "defaultProfile": "Shell predeterminado",
       "defaultProfileHint": "Se usa al abrir una nueva pestaña.",
       "confirmCloseRunning": "Confirmar antes de cerrar un terminal con un programa en ejecución",
-      "confirmCloseRunningHint": "P. ej.: un servidor en marcha, una sesión SSH o un editor abierto."
+      "confirmCloseRunningHint": "P. ej.: un servidor en marcha, una sesión SSH o un editor abierto.",
+      "clipboard": "Copiar y pegar",
+      "ctrlCCopiesSelection": "Ctrl+C copia cuando hay texto seleccionado",
+      "ctrlCCopiesSelectionHint": "Sin selección, Ctrl+C sigue interrumpiendo el comando.",
+      "copyOnSelect": "Copiar al seleccionar",
+      "copyOnSelectHint": "El texto pasa al portapapeles en cuanto se selecciona.",
+      "rightClickPaste": "Clic derecho copia/pega",
+      "rightClickPasteHint": "Copia si hay selección; si no, pega. Desactivado: abre un menú.",
+      "confirmMultilinePaste": "Confirmar antes de pegar varias líneas",
+      "confirmMultilinePasteHint": "Evita ejecutar por error varios comandos pegados."
     },
     "shells": {
       "intro": "Perfiles disponibles para nuevas pestañas. El orden define los atajos Ctrl+Shift+1…9.",
@@ -146,6 +158,29 @@
       "conflictMessage": "{{combo}} ya lo usa \"{{action}}\". ¿Usarlo aquí y quitarlo de allí?",
       "replace": "Reemplazar",
       "noResults": "No se encontraron acciones."
+    },
+    "advanced": {
+      "scrollback": "Historial de desplazamiento",
+      "lines_one": "{{formatted}} línea",
+      "lines_other": "{{formatted}} líneas",
+      "scrollbackHint": "Cuántas líneas guarda cada terminal para desplazarse hacia arriba.",
+      "renderer": "Renderizador",
+      "renderer_webgl": "GPU (WebGL), más rápido",
+      "renderer_dom": "Compatible (sin GPU)",
+      "rendererHint": "Se aplica a los terminales abiertos después del cambio.",
+      "screenReader": "Modo lector de pantalla",
+      "screenReaderHint": "Expone el texto del terminal a lectores de pantalla (NVDA, Narrador). Puede hacerlo más lento.",
+      "folders": "Carpetas",
+      "openConfig": "Abrir carpeta de configuración",
+      "openLogs": "Abrir carpeta de registros",
+      "foldersHint": "La configuración está en %APPDATA%\\NexusTerminal y los registros en %LOCALAPPDATA%\\NexusTerminal\\logs."
+    },
+    "about": {
+      "version": "Versión {{version}}",
+      "description": "Gestor de terminales para Windows: varios shells en pestañas, organizados y con nombre.",
+      "builtWith": "Hecho con",
+      "themeCredits": "Créditos de los temas",
+      "licensesHint": "Las licencias completas están en THIRD_PARTY_NOTICES.md y THIRD_PARTY_LICENSES.md, junto al código."
     }
   },
   "actions": {
@@ -163,10 +198,41 @@
     },
     "terminal": {
       "copy": "Copiar",
-      "paste": "Pegar"
+      "paste": "Pegar",
+      "find": "Buscar en el terminal",
+      "clear": "Limpiar terminal",
+      "zoomIn": "Aumentar zoom",
+      "zoomOut": "Reducir zoom",
+      "zoomReset": "Restablecer zoom"
     },
     "app": {
-      "settings": "Abrir configuración"
+      "settings": "Abrir configuración",
+      "toggleFullscreen": "Pantalla completa"
     }
+  },
+  "window": {
+    "minimize": "Minimizar",
+    "maximize": "Maximizar",
+    "restore": "Restaurar",
+    "close": "Cerrar"
+  },
+  "search": {
+    "placeholder": "Buscar",
+    "caseSensitive": "Coincidir mayúsculas",
+    "wholeWord": "Palabra completa",
+    "regex": "Expresión regular",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "close": "Cerrar búsqueda",
+    "noResults": "Sin resultados",
+    "position": "{{index}} de {{count}}",
+    "invalid": "Expresión no válida"
+  },
+  "paste": {
+    "title": "¿Pegar varias líneas?",
+    "message_one": "El texto tiene {{count}} línea y puede ejecutar comandos al pegarse:\n\n{{preview}}",
+    "message_other": "El texto tiene {{count}} líneas y puede ejecutar comandos al pegarse:\n\n{{preview}}",
+    "confirm": "Pegar",
+    "cancel": "Cancelar"
   }
 }

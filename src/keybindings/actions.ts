@@ -1,6 +1,7 @@
 import { useSessions } from "../stores/sessions";
 import { useUi } from "../stores/ui";
-import { copySelection, pasteIntoActive } from "../lib/terminals";
+import { changeZoom, clearActiveTerminal, copySelection, pasteIntoActive } from "../lib/terminals";
+import { toggleFullscreen } from "../lib/window";
 import { requestCloseTab } from "../lib/closeTabs";
 import type { ActionId } from "./defaults";
 
@@ -42,7 +43,19 @@ export function runAction(action: ActionId): void {
       return copySelection();
     case "terminal.paste":
       return pasteIntoActive();
+    case "terminal.find":
+      return useUi.getState().openSearch();
+    case "terminal.clear":
+      return clearActiveTerminal();
+    case "terminal.zoomIn":
+      return changeZoom(1);
+    case "terminal.zoomOut":
+      return changeZoom(-1);
+    case "terminal.zoomReset":
+      return changeZoom("reset");
     case "app.settings":
       return useUi.getState().openSettings();
+    case "app.toggleFullscreen":
+      return void toggleFullscreen();
   }
 }

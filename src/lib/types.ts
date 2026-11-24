@@ -19,6 +19,11 @@ export interface Profile {
 export interface GeneralSettings {
   defaultProfile: string;
   confirmCloseRunning: boolean;
+  /** Opções de copiar/colar (Fase 5). Ausentes em arquivos antigos: ver settings/defaults.ts. */
+  copyOnSelect?: boolean;
+  rightClickPaste?: boolean;
+  ctrlCCopiesSelection?: boolean;
+  confirmMultilinePaste?: boolean;
   /** Chaves desconhecidas são preservadas pelo backend. */
   [key: string]: unknown;
 }
@@ -43,6 +48,12 @@ export interface AppearanceSettings {
   cursorBlink: boolean;
 }
 
+export interface TerminalSettings {
+  scrollback: number;
+  renderer: "webgl" | "dom";
+  screenReaderMode: boolean;
+}
+
 export type LanguageSetting = "system" | "pt-BR" | "en-US" | "es-ES";
 
 /** Diferença em relação ao atalho padrão. `keys: null` desativa a ação. */
@@ -60,6 +71,7 @@ export interface Settings {
   theme?: ThemeSettings;
   appearance?: AppearanceSettings;
   keybindings?: KeybindingOverride[];
+  terminal?: TerminalSettings;
   [key: string]: unknown;
 }
 

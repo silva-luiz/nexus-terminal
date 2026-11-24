@@ -82,3 +82,14 @@ export const themesApi = {
     return invoke("themes_delete", { id });
   },
 };
+
+export const appApi = {
+  /** Pasta passada com `-d` na linha de comando, se houver. */
+  startDir(): Promise<string | null> {
+    return invoke<string | null>("app_start_dir");
+  },
+
+  openFolder(folder: "config" | "logs"): Promise<void> {
+    return invoke("open_app_folder", { folder });
+  },
+};

@@ -10,6 +10,12 @@ export interface ConfirmRequest {
 
 interface UiState {
   settingsOpen: boolean;
+  /** Barra de busca do terminal (não é modal: os atalhos continuam valendo). */
+  searchOpen: boolean;
+  /** Muda a cada Ctrl+Shift+F, para refocar a busca mesmo se já estiver aberta. */
+  searchFocusToken: number;
+  openSearch(): void;
+  closeSearch(): void;
   confirm: ConfirmRequest | null;
   openSettings(): void;
   closeSettings(): void;
@@ -20,7 +26,17 @@ interface UiState {
 
 export const useUi = create<UiState>((set, get) => ({
   settingsOpen: false,
+  searchOpen: false,
+  searchFocusToken: 0,
   confirm: null,
+
+  openSearch() {
+    set((s) => ({ searchOpen: true, searchFocusToken: s.searchFocusToken + 1 }));
+  },
+
+  closeSearch() {
+    set({ searchOpen: false });
+  },
 
   openSettings() {
     set({ settingsOpen: true });

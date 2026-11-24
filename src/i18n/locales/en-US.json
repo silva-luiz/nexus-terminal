@@ -22,7 +22,8 @@
     "message": "A program is still running in \"{{name}}\". Close anyway?",
     "messageMany": "Programs are still running in {{count}} terminals. Close anyway?",
     "confirm": "Close",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "windowTitle": "Close Nexus Terminal?"
   },
   "settings": {
     "title": "Settings",
@@ -32,7 +33,9 @@
       "shells": "Shells",
       "appearance": "Appearance",
       "language": "Language",
-      "keybindings": "Shortcuts"
+      "keybindings": "Shortcuts",
+      "advanced": "Advanced",
+      "about": "About"
     },
     "warning": "The settings file could not be read, so the defaults are in use. When you save a change, the original file will be kept as settings.json.bak.",
     "saveError": "Could not save settings: {{error}}",
@@ -41,7 +44,16 @@
       "defaultProfile": "Default shell",
       "defaultProfileHint": "Used when opening a new tab.",
       "confirmCloseRunning": "Confirm before closing a terminal with a running program",
-      "confirmCloseRunningHint": "E.g. a running server, an SSH session or an open editor."
+      "confirmCloseRunningHint": "E.g. a running server, an SSH session or an open editor.",
+      "clipboard": "Copy and paste",
+      "ctrlCCopiesSelection": "Ctrl+C copies when text is selected",
+      "ctrlCCopiesSelectionHint": "Without a selection, Ctrl+C still interrupts the command.",
+      "copyOnSelect": "Copy on select",
+      "copyOnSelectHint": "Text goes to the clipboard as soon as it is selected.",
+      "rightClickPaste": "Right click copies/pastes",
+      "rightClickPasteHint": "Copies if there is a selection, otherwise pastes. Off: opens a menu.",
+      "confirmMultilinePaste": "Confirm before pasting multiple lines",
+      "confirmMultilinePasteHint": "Prevents running several pasted commands by accident."
     },
     "shells": {
       "intro": "Profiles available for new tabs. The order defines the Ctrl+Shift+1…9 shortcuts.",
@@ -146,6 +158,29 @@
       "conflictMessage": "{{combo}} is already used by \"{{action}}\". Use it here and remove it there?",
       "replace": "Replace",
       "noResults": "No actions found."
+    },
+    "advanced": {
+      "scrollback": "Scrollback",
+      "lines_one": "{{formatted}} line",
+      "lines_other": "{{formatted}} lines",
+      "scrollbackHint": "How many lines each terminal keeps for scrolling up.",
+      "renderer": "Renderer",
+      "renderer_webgl": "GPU (WebGL) — faster",
+      "renderer_dom": "Compatible (no GPU)",
+      "rendererHint": "Applies to terminals opened after the change.",
+      "screenReader": "Screen reader mode",
+      "screenReaderHint": "Exposes terminal text to screen readers (NVDA, Narrator). May slow the terminal down.",
+      "folders": "Folders",
+      "openConfig": "Open settings folder",
+      "openLogs": "Open logs folder",
+      "foldersHint": "Settings are in %APPDATA%\\NexusTerminal and logs in %LOCALAPPDATA%\\NexusTerminal\\logs."
+    },
+    "about": {
+      "version": "Version {{version}}",
+      "description": "Terminal manager for Windows: several shells in tabs, organized and named.",
+      "builtWith": "Built with",
+      "themeCredits": "Theme credits",
+      "licensesHint": "Full licenses are in THIRD_PARTY_NOTICES.md and THIRD_PARTY_LICENSES.md, next to the source code."
     }
   },
   "actions": {
@@ -163,10 +198,41 @@
     },
     "terminal": {
       "copy": "Copy",
-      "paste": "Paste"
+      "paste": "Paste",
+      "find": "Find in terminal",
+      "clear": "Clear terminal",
+      "zoomIn": "Zoom in",
+      "zoomOut": "Zoom out",
+      "zoomReset": "Reset zoom"
     },
     "app": {
-      "settings": "Open settings"
+      "settings": "Open settings",
+      "toggleFullscreen": "Full screen"
     }
+  },
+  "window": {
+    "minimize": "Minimize",
+    "maximize": "Maximize",
+    "restore": "Restore",
+    "close": "Close"
+  },
+  "search": {
+    "placeholder": "Find",
+    "caseSensitive": "Match case",
+    "wholeWord": "Whole word",
+    "regex": "Regular expression",
+    "previous": "Previous",
+    "next": "Next",
+    "close": "Close search",
+    "noResults": "No results",
+    "position": "{{index}} of {{count}}",
+    "invalid": "Invalid expression"
+  },
+  "paste": {
+    "title": "Paste multiple lines?",
+    "message_one": "The text has {{count}} line and may run commands when pasted:\n\n{{preview}}",
+    "message_other": "The text has {{count}} lines and may run commands when pasted:\n\n{{preview}}",
+    "confirm": "Paste",
+    "cancel": "Cancel"
   }
 }

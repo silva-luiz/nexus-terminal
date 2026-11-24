@@ -1,7 +1,14 @@
 import i18n, { resolveLanguage } from "../i18n";
 import { useKeybindings } from "../keybindings/bindings";
-import { buildFontStack, setTerminalVisualOptions } from "../lib/terminals";
-import { readAppearance, readKeybindings, readLanguage, readTheme } from "../settings/defaults";
+import { buildFontStack, setTerminalBehavior, setTerminalVisualOptions } from "../lib/terminals";
+import {
+  readAppearance,
+  readClipboard,
+  readKeybindings,
+  readLanguage,
+  readTerminal,
+  readTheme,
+} from "../settings/defaults";
 import { visibleProfiles } from "../settings/profiles";
 import { useSessions } from "../stores/sessions";
 import { useSettings } from "../stores/settings";
@@ -24,7 +31,11 @@ function applySettings(): void {
   const theme = resolveTheme(readTheme(settings), allThemes(userThemes), systemDark);
   applyUiTheme(theme);
   const appearance = readAppearance(settings);
+  const terminal = readTerminal(settings);
+  setTerminalBehavior({ ...readClipboard(settings), renderer: terminal.renderer });
   setTerminalVisualOptions({
+    scrollback: terminal.scrollback,
+    screenReaderMode: terminal.screenReaderMode,
     theme: terminalTheme(theme),
     fontFamily: buildFontStack(appearance.fontFamily),
     fontSize: appearance.fontSize,

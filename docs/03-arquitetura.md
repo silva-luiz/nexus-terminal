@@ -61,9 +61,14 @@ Regra: **o frontend nunca executa processos**. Ele só pede ao backend, por coma
 | `commands_exist` | `{ commands: string[] }` | `bool[]` | Verifica se cada executável existe (aviso na tela de shells) |
 | `settings_load` | — | `{ settings, warning }` | Configurações em memória; `warning` quando o arquivo estava inválido |
 | `settings_save` | `Settings` | `Settings` | Normaliza, grava de forma atômica e devolve o resultado |
-| `themes_list` | — | `Theme[]` | Temas embutidos + da pasta do usuário |
-| `theme_import` | `{ path }` | `Theme` | Importa tema JSON (inclui formato Windows Terminal) |
-| `session_save_layout` / `session_load_layout` | `Layout` / — | `()` / `Layout` | Restaurar abas ao reabrir |
+| `themes_list` | — | `unknown[]` | Temas da pasta do usuário (os embutidos ficam no frontend); a validação é feita no frontend |
+| `themes_read_file` | `{ path }` | `unknown` | Lê o JSON escolhido em "Importar tema" (limite de 1 MB) |
+| `themes_save` / `themes_delete` | `{ theme }` / `{ id }` | `()` | Grava/exclui `themes/<id>.json` (id só com `a-z0-9-`) |
+| `app_start_dir` | — | `string \| null` | Pasta passada com `-d`/`--directory` na linha de comando |
+| `open_app_folder` | `{ folder: "config" \| "logs" }` | `()` | Abre a pasta no Explorer |
+| `session_save_layout` / `session_load_layout` | `Layout` / — | `()` / `Layout` | Restaurar abas ao reabrir *(v1.x)* |
+
+Evento do backend para o frontend: `open-tab` (`{ cwd: string \| null }`), emitido quando o app é aberto de novo (instância única) para criar uma aba na janela existente.
 
 `PtyEvent` (enviado pelo `Channel`):
 

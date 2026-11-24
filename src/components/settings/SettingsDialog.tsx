@@ -9,9 +9,20 @@ import { ShellsSection } from "./ShellsSection";
 import { AppearanceSection } from "./AppearanceSection";
 import { LanguageSection } from "./LanguageSection";
 import { KeybindingsSection } from "./KeybindingsSection";
+import { AdvancedSection } from "./AdvancedSection";
+import { AboutSection } from "./AboutSection";
 
-type Section = "general" | "appearance" | "language" | "shells" | "keybindings";
-const SECTIONS: Section[] = ["general", "appearance", "language", "shells", "keybindings"];
+type Section =
+  "general" | "appearance" | "language" | "shells" | "keybindings" | "advanced" | "about";
+const SECTIONS: Section[] = [
+  "general",
+  "appearance",
+  "language",
+  "shells",
+  "keybindings",
+  "advanced",
+  "about",
+];
 
 export function SettingsDialog() {
   const { t } = useTranslation();
@@ -82,6 +93,8 @@ export function SettingsDialog() {
         {settings && section === "language" && <LanguageSection settings={settings} />}
         {settings && section === "shells" && <ShellsSection settings={settings} />}
         {settings && section === "keybindings" && <KeybindingsSection settings={settings} />}
+        {settings && section === "advanced" && <AdvancedSection settings={settings} />}
+        {section === "about" && <AboutSection />}
       </section>
     </Modal>
   );

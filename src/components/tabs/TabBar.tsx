@@ -1,4 +1,4 @@
-import { useCallback, useState, type MouseEvent } from "react";
+import { useCallback, useEffect, useState, type MouseEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { useSessions, type TerminalTab } from "../../stores/sessions";
 import { shortcutLabel, useShortcutLabel } from "../../keybindings/bindings";
@@ -6,6 +6,12 @@ import { ContextMenu, type MenuEntry } from "../ui/ContextMenu";
 import { Tab } from "./Tab";
 import { requestCloseOthers, requestCloseTab, requestCloseToRight } from "../../lib/closeTabs";
 import { useUi } from "../../stores/ui";
+import {
+  closeWindow,
+  minimizeWindow,
+  toggleMaximizeWindow,
+  watchMaximized,
+} from "../../lib/window";
 
 interface MenuState {
   x: number;
@@ -75,8 +81,9 @@ export function TabBar() {
   };
 
   return (
-    <header className="tab-bar">
-      <div className="tab-bar__tabs" role="tablist">
+    // A barra de abas é também a barra de título: áreas vazias arrastam a janela.
+    <header className="tab-bar" data-tauri-drag-region>
+      <div className="tab-bar__tabs" role="tablist" data-tauri-drag-region>
         {tabs.map((tab, index) => (
           <Tab
             key={tab.id}
@@ -108,7 +115,7 @@ export function TabBar() {
           ▾
         </button>
       </div>
-      <div className="tab-bar__spacer" />
+      <div className="tab-bar__spacer" data-tauri-drag-region />
       <div className="tab-bar__actions">
         <button
           type="button"
@@ -120,7 +127,47 @@ export function TabBar() {
           ⚙
         </button>
       </div>
+      <WindowControls />
       {menu && <ContextMenu {...menu} onClose={closeMenu} />}
     </header>
+  );
+}
+
+/** Minimizar, maximizar/restaurar e fechar (ícones da fonte Segoe Fluent Icons do Windows). */
+function WindowControls() {
+  const { t } = useTranslation();
+  const [maximized, setMaximized] = useState(false);
+  useEffect(() => watchMaximized(setMaximized), []);
+
+  return (
+    <div className="window-controls">
+      <button
+        type="button"
+        className="window-controls__button"
+        aria-label={t("window.minimize")}
+        title={t("window.minimize")}
+        onClick={minimizeWindow}
+      >
+        {"\uE921"}
+      </button>
+      <button
+        type="button"
+        className="window-controls__button"
+        aria-label={t(maximized ? "window.restore" : "window.maximize")}
+        title={t(maximized ? "window.restore" : "window.maximize")}
+        onClick={toggleMaximizeWindow}
+      >
+        {maximized ? "\uE923" : "\uE922"}
+      </button>
+      <button
+        type="button"
+        className="window-controls__button window-controls__button--close"
+        aria-label={t("window.close")}
+        title={t("window.close")}
+        onClick={closeWindow}
+      >
+        {"\uE8BB"}
+      </button>
+    </div>
   );
 }

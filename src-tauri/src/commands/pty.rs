@@ -22,14 +22,31 @@ pub async fn pty_spawn(
     let profile = settings
         .profile(&profile_id)
         .ok_or(AppError::ProfileNotFound(profile_id.clone()))?;
+    // Pasta pedida que não existe: usa a do perfil em vez de falhar.
+    let cwd = cwd.filter(|dir| {
+        let ok = std::path::Path::new(dir).is_dir();
+        if !ok {
+            log::warn!("pasta inicial inexistente ignorada: {dir}");
+        }
+        ok
+    });
     let spec = profile.launch_spec(cwd, |name| std::env::var(name).ok());
     if !shells::command_exists(&spec.command) {
+        log::warn!(
+            "perfil {profile_id}: executável não encontrado: {}",
+            spec.command
+        );
         return Err(AppError::CommandNotFound(spec.command));
     }
-    pty.spawn(&spec, cols, rows, move |event| {
+    let result = pty.spawn(&spec, cols, rows, move |event| {
         // Se a interface já fechou o canal, não há a quem avisar.
         let _ = on_event.send(event);
-    })
+    });
+    match &result {
+        Ok(id) => log::info!("sessão {id} iniciada (perfil {profile_id})"),
+        Err(err) => log::error!("falha ao iniciar o perfil {profile_id}: {err}"),
+    }
+    result
 }
 
 #[tauri::command]

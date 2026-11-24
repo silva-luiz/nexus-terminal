@@ -1,0 +1,55 @@
+name: Release
+
+# Cria um release em RASCUNHO com os instaladores quando uma tag v* é enviada
+# (ex.: git tag v1.0.0 && git push origin v1.0.0). Revise o rascunho e publique à mão.
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: x86_64-pc-windows-msvc
+          - target: aarch64-pc-windows-msvc
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri
+          key: ${{ matrix.target }}
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test
+
+      - uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Assinatura de código (opcional): configure os segredos e o
+          # bundle.windows.signCommand no tauri.conf.json — ver docs/08 §8.3.
+        with:
+          tagName: ${{ github.ref_name }}
+          releaseName: Nexus Terminal ${{ github.ref_name }}
+          releaseBody: Veja o CHANGELOG.md para as mudanças desta versão.
+          releaseDraft: true
+          prerelease: false
+          args: --target ${{ matrix.target }}

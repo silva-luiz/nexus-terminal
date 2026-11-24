@@ -11,6 +11,8 @@
 | E2E | WebdriverIO + `tauri-driver` | Fluxos críticos no app real |
 
 ### Fluxos E2E mínimos
+
+> **Situação na v1.0:** os testes E2E ainda não foram configurados. A cobertura atual é de testes de unidade e integração (Rust: PTY real, configurações, detecção, temas; frontend: stores, atalhos, temas, configurações) mais o teste manual abaixo.
 1. Abrir app → existe 1 aba → digitar `echo teste` + Enter → saída contém `teste`.
 2. `Ctrl+Shift+T` → 2 abas → `Ctrl+1` volta para a primeira.
 3. `F2` → digitar "API" → Enter → aba mostra "API".
@@ -57,6 +59,8 @@ Configurações relevantes em `tauri.conf.json` → `bundle`:
 ARM64: `rustup target add aarch64-pc-windows-msvc` e `pnpm tauri build --target aarch64-pc-windows-msvc`.
 
 ## 8.3 Assinatura de código
+
+> **Situação na v1.0:** os instaladores ainda **não** são assinados (o Windows SmartScreen vai avisar na primeira instalação).
 
 Sem assinatura, o Windows SmartScreen mostra "O Windows protegeu o computador". Opções:
 - Certificado de assinatura de código (OV/EV) de uma autoridade certificadora.

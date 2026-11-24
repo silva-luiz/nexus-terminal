@@ -13,7 +13,13 @@ export type ActionId =
   | "tab.moveRight"
   | "terminal.copy"
   | "terminal.paste"
-  | "app.settings";
+  | "terminal.find"
+  | "terminal.clear"
+  | "terminal.zoomIn"
+  | "terminal.zoomOut"
+  | "terminal.zoomReset"
+  | "app.settings"
+  | "app.toggleFullscreen";
 
 export interface Keybinding {
   action: ActionId;
@@ -43,7 +49,13 @@ export const defaultKeybindings: Keybinding[] = [
   ...newWithProfile,
   { action: "terminal.copy", keys: "ctrl+shift+c" },
   { action: "terminal.paste", keys: "ctrl+shift+v" },
+  { action: "terminal.find", keys: "ctrl+shift+f" },
+  { action: "terminal.clear", keys: "ctrl+shift+k" },
+  { action: "terminal.zoomIn", keys: "ctrl+=" },
+  { action: "terminal.zoomOut", keys: "ctrl+-" },
+  { action: "terminal.zoomReset", keys: "ctrl+0" },
   { action: "app.settings", keys: "ctrl+," },
+  { action: "app.toggleFullscreen", keys: "f11" },
 ];
 
 /** Atalhos do navegador que recarregariam a interface e apagariam os terminais. */

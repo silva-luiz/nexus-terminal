@@ -1,6 +1,7 @@
 import { z } from "zod";
 import type {
   AppearanceSettings,
+  TerminalSettings,
   KeybindingOverride,
   LanguageSetting,
   Settings,
@@ -28,6 +29,54 @@ export const DEFAULT_APPEARANCE: AppearanceSettings = {
 
 export const FONT_SIZE = { min: 8, max: 32 } as const;
 export const LINE_HEIGHT = { min: 1, max: 2 } as const;
+export const SCROLLBACK = { min: 1_000, max: 100_000 } as const;
+
+export interface ClipboardSettings {
+  copyOnSelect: boolean;
+  rightClickPaste: boolean;
+  ctrlCCopiesSelection: boolean;
+  confirmMultilinePaste: boolean;
+}
+
+export const DEFAULT_CLIPBOARD: ClipboardSettings = {
+  copyOnSelect: false,
+  rightClickPaste: true,
+  ctrlCCopiesSelection: true,
+  confirmMultilinePaste: true,
+};
+
+export const DEFAULT_TERMINAL: TerminalSettings = {
+  scrollback: 10_000,
+  renderer: "webgl",
+  screenReaderMode: false,
+};
+
+const clipboardSchema = z.object({
+  copyOnSelect: z.boolean().catch(DEFAULT_CLIPBOARD.copyOnSelect),
+  rightClickPaste: z.boolean().catch(DEFAULT_CLIPBOARD.rightClickPaste),
+  ctrlCCopiesSelection: z.boolean().catch(DEFAULT_CLIPBOARD.ctrlCCopiesSelection),
+  confirmMultilinePaste: z.boolean().catch(DEFAULT_CLIPBOARD.confirmMultilinePaste),
+});
+
+const terminalSchema = z.object({
+  scrollback: z
+    .number()
+    .int()
+    .min(SCROLLBACK.min)
+    .max(SCROLLBACK.max)
+    .catch(DEFAULT_TERMINAL.scrollback),
+  renderer: z.enum(["webgl", "dom"]).catch(DEFAULT_TERMINAL.renderer),
+  screenReaderMode: z.boolean().catch(DEFAULT_TERMINAL.screenReaderMode),
+});
+
+/** Opções de copiar/colar (ficam em `general` no settings.json). */
+export function readClipboard(settings: Settings | null): ClipboardSettings {
+  return clipboardSchema.parse(settings?.general ?? {});
+}
+
+export function readTerminal(settings: Settings | null): TerminalSettings {
+  return terminalSchema.parse(settings?.terminal ?? {});
+}
 
 const themeSchema = z.object({
   mode: z.enum(["system", "dark", "light"]).catch(DEFAULT_THEME.mode),

@@ -35,7 +35,16 @@ pnpm dev          # abre o app em modo desenvolvimento
 pnpm test         # testes do frontend (Vitest) e do backend (cargo test)
 pnpm lint         # ESLint + clippy
 pnpm build        # gera os instaladores em src-tauri\target\release\bundle
+pnpm licenses:generate   # atualiza THIRD_PARTY_LICENSES.md
 ```
+
+Linha de comando do app instalado:
+
+```powershell
+nexus-terminal.exe -d C:\projetos\api   # abre o terminal (ou uma nova aba) na pasta indicada
+```
+
+Versões: veja o [CHANGELOG](CHANGELOG.md). Para publicar, crie a tag `vX.Y.Z`; o workflow `release.yml` gera um release em **rascunho** com os instaladores, para revisar e publicar à mão.
 
 ## Status
 
@@ -46,4 +55,5 @@ pnpm build        # gera os instaladores em src-tauri\target\release\bundle
 | 2 — Várias abas + renomear | ✅ Abas, renomear (duplo clique/F2/menu), título automático, reordenar arrastando, menu de contexto, atalhos, reiniciar com Enter |
 | 3 — Configurações: shells e geral | ✅ Detecção (PowerShell 5.1/7, CMD, Git Bash, WSL), `settings.json`, tela de configurações (`Ctrl+,`), editor de perfis, confirmação ao fechar com programa rodando |
 | 4 — Temas, idioma e atalhos configuráveis | ✅ 8 temas embutidos + importação (inclusive do Windows Terminal), modo claro/escuro seguindo o Windows, fonte e cursor, idioma (pt-BR, en-US, es-ES) e atalhos personalizáveis com detecção de conflito |
-| 5 — Polimento e v1.0 | ⏳ Próxima |
+| 5 — Polimento e v1.0 | ✅ Barra de título própria, instância única, `-d <pasta>`, busca, zoom, limpar, opções de copiar/colar, confirmação ao fechar a janela, logs, seções Avançado e Sobre, ícone, licenças e instaladores |
+| 6 — Pós-v1.0 | ⏳ Painéis divididos, paleta de comandos, restaurar sessão, auto-update… |

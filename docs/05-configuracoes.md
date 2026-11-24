@@ -164,7 +164,7 @@ Aparência do terminal (`settings.appearance`): família da fonte (padrão `Casc
 ]
 ```
 
-Só as diferenças em relação ao padrão são gravadas; o resto vem de `keybindings/defaults.ts`. Cada ação tem um atalho (ou nenhum). As ações que já existem no app são as de `tab.*`, `terminal.copy`, `terminal.paste` e `app.settings`; as outras da tabela entram nas fases seguintes.
+Só as diferenças em relação ao padrão são gravadas; o resto vem de `keybindings/defaults.ts`. Cada ação tem um atalho (ou nenhum). Na v1.0 existem as ações `tab.*` (exceto `tab.duplicate`), `terminal.*` e `app.settings` / `app.toggleFullscreen`; `pane.*`, `tab.duplicate`, `app.quickSwitcher` e `app.commandPalette` entram na Fase 6.
 
 Tela de atalhos:
 - Clicar no atalho entra no modo de gravação; `Esc` sozinho cancela.
@@ -184,16 +184,20 @@ Tela de atalhos:
 | Chave | Padrão | Descrição |
 |---|---|---|
 | `general.defaultProfile` | `"powershell"` | Perfil usado em nova aba |
-| `general.restoreSession` | `true` | Reabrir abas da última vez |
+| `general.restoreSession` | `true` | Reabrir abas da última vez *(v1.x, ainda não implementado)* |
 | `general.confirmCloseRunning` | `true` | Confirmar ao fechar com processo ativo |
 | `general.confirmMultilinePaste` | `true` | Confirmar colagem com várias linhas |
 | `general.copyOnSelect` | `false` | Copiar ao selecionar |
 | `general.rightClickPaste` | `true` | Clique direito cola (senão abre menu) |
 | `general.ctrlCCopiesSelection` | `true` | `Ctrl+C` copia se houver seleção |
 | `terminal.scrollback` | `10000` | Linhas no histórico |
-| `terminal.renderer` | `"webgl"` | `"webgl"` ou `"dom"` (fallback) |
-| `terminal.bell` | `"visual"` | `"none"`, `"visual"`, `"sound"` |
-| `advanced.logLevel` | `"info"` | Nível de log |
+| `terminal.renderer` | `"webgl"` | `"webgl"` ou `"dom"` (fallback); vale para terminais novos |
+| `terminal.screenReaderMode` | `false` | Expõe o texto do terminal para leitores de tela |
+| `terminal.bell` | `"visual"` | `"none"`, `"visual"`, `"sound"` *(v1.x, ainda não implementado)* |
+
+Logs: nível fixo `info`, em `%LOCALAPPDATA%\NexusTerminal\logs\nexus-terminal.log` (até 2 MB por arquivo, 5 arquivos). Erros não tratados da interface também vão para esse arquivo. A seção **Avançado** tem botões para abrir a pasta de configurações e a de logs.
+
+O zoom (`Ctrl+=`, `Ctrl+-`, `Ctrl+0`, `Ctrl+roda`) vale só para a sessão atual e não é salvo; o tamanho de fonte salvo é o da seção Aparência.
 
 ## 5.6 Arquivo completo e migração
 

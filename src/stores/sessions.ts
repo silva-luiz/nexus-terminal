@@ -19,6 +19,8 @@ export interface TerminalTab {
   titleLocked: boolean;
   status: TabStatus;
   exitCode: number | null;
+  /** Pasta inicial pedida (ex.: `-d` na linha de comando). Sem ela, vale a do perfil. */
+  cwd?: string;
   /** ID da sessão no backend enquanto o processo está rodando. */
   sessionId: string | null;
   /** Incrementa a cada reinício para recriar o terminal. */
@@ -37,8 +39,8 @@ interface SessionsState {
   counters: Record<string, number>;
 
   setProfiles(profiles: ShellProfileInfo[], defaultProfileId: string): void;
-  ensureOne(): void;
-  create(profileId?: string): string;
+  ensureOne(cwd?: string): void;
+  create(profileId?: string, cwd?: string): string;
   close(id: string): void;
   activate(id: string): void;
   activateIndex(index: number): void;
@@ -80,11 +82,11 @@ export const useSessions = create<SessionsState>((set, get) => ({
     set({ profiles, defaultProfileId });
   },
 
-  ensureOne() {
-    if (get().tabs.length === 0) get().create();
+  ensureOne(cwd) {
+    if (get().tabs.length === 0) get().create(undefined, cwd);
   },
 
-  create(profileId) {
+  create(profileId, cwd) {
     const state = get();
     const pid = profileId ?? state.defaultProfileId;
     const profileName = state.profiles.find((p) => p.id === pid)?.name ?? pid;
@@ -93,6 +95,7 @@ export const useSessions = create<SessionsState>((set, get) => ({
     const tab: TerminalTab = {
       id: newTabId(),
       profileId: pid,
+      cwd,
       defaultTitle,
       title: defaultTitle,
       titleLocked: false,

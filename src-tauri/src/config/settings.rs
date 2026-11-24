@@ -137,10 +137,7 @@ impl SettingsStore {
 
     /// `%APPDATA%\NexusTerminal` (docs/03-arquitetura.md §3.10).
     pub fn default_dir() -> PathBuf {
-        std::env::var_os("APPDATA")
-            .map(PathBuf::from)
-            .unwrap_or_else(std::env::temp_dir)
-            .join("NexusTerminal")
+        super::paths::config_dir()
     }
 
     pub fn path(&self) -> PathBuf {
